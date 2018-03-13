@@ -1,7 +1,7 @@
-package javaconfig;
+package com.oc.javaconfig;
 
-import com.cheny.template.FlushMessageDirective;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.oc.template.FlushMessageDirective;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -28,7 +28,7 @@ import java.util.Properties;
  * spring root配置
  */
 @Configuration
-@ComponentScan(basePackages = {"com.cheny"}, excludeFilters = {@ComponentScan.Filter({Controller.class})})
+@ComponentScan(basePackages = {"com.oc"}, excludeFilters = {@ComponentScan.Filter({Controller.class})})
 @PropertySource(value = {"classpath:system.properties"})
 @EnableTransactionManagement //启动事务注解
 public class RootConfig implements TransactionManagementConfigurer {

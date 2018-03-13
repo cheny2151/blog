@@ -1,4 +1,4 @@
-package javaconfig;
+package com.oc.javaconfig;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package javaconfig;
+package com.oc.javaconfig;
 
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.request.RequestContextListener;
