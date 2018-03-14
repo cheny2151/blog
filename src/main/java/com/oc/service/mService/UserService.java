@@ -1,12 +1,12 @@
-package com.oc.mService;
+package com.oc.service.mService;
 
 import com.oc.entity.User;
-import com.oc.mDao.UserDao;
+import com.oc.dao.mDao.UserDao;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
-@Service
+//@Service
 public class UserService {
     @Resource
     private UserDao userDao;

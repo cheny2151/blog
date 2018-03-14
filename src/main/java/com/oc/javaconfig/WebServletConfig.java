@@ -8,10 +8,7 @@ import org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.accept.ContentNegotiationManagerFactoryBean;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
@@ -50,20 +47,23 @@ public class WebServletConfig implements WebMvcConfigurer {
     }
 
 
-    @Bean(name = "contentNegotiationManager")
-    public ContentNegotiationManagerFactoryBean registerContentNegotiationManagerFactoryBean() {
-        ContentNegotiationManagerFactoryBean contentNegotiationManager = new ContentNegotiationManagerFactoryBean();
-        contentNegotiationManager.setFavorPathExtension(false);
-        contentNegotiationManager.setFavorParameter(false);
-        contentNegotiationManager.setIgnoreAcceptHeader(false);
-        Properties properties = new Properties();
-        properties.setProperty("atom", "application/atom+xml");
-        properties.setProperty("html", "text/html");
-        properties.setProperty("json", "application/json");
-        properties.setProperty("*", "*/*");
-        contentNegotiationManager.setMediaTypes(properties);
-        return contentNegotiationManager;
-    }
+//    @Override
+//    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+//        configurer.favorParameter(false);
+//        configurer.favorPathExtension(false);
+//        configurer.ignoreAcceptHeader(false);
+//        configurer.mediaTypes()
+//        ContentNegotiationManagerFactoryBean contentNegotiationManager = new ContentNegotiationManagerFactoryBean();
+//        contentNegotiationManager.setFavorPathExtension(false);
+//        contentNegotiationManager.setFavorParameter(false);
+//        contentNegotiationManager.setIgnoreAcceptHeader(false);
+//        Properties properties = new Properties();
+//        properties.setProperty("atom", "application/atom+xml");
+//        properties.setProperty("html", "text/html");
+//        properties.setProperty("json", "application/json");
+//        properties.setProperty("*", "*/*");
+//        contentNegotiationManager.setMediaTypes(properties);
+//    }
 
     /**
      * 配置视图解析器
