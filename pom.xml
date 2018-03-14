@@ -166,6 +166,20 @@
             <version>1.0.0.Final</version>
         </dependency>
 
+        <!-- mybatis核心包 -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.2.6</version>
+        </dependency>
+
+        <!-- mybatis/spring包 -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+
         <!-- ehcache缓存 -->
         <dependency>
             <groupId>net.sf.ehcache</groupId>
