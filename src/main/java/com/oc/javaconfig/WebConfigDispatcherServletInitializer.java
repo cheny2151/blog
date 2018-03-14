@@ -23,6 +23,8 @@ public class WebConfigDispatcherServletInitializer extends AbstractAnnotationCon
         AnnotationConfigWebApplicationContext rootContext =
                 new AnnotationConfigWebApplicationContext();
         rootContext.register(RootConfig.class);
+        //default profile
+        rootContext.getEnvironment().setDefaultProfiles("dev");
         servletContext.addListener(new ContextLoaderListener(rootContext));
 
         //mvc context

@@ -25,7 +25,7 @@ import java.util.Properties;
 @Configuration
 @EnableWebMvc
 @EnableAspectJAutoProxy
-@ComponentScan(basePackages = {"com.cheny"}, useDefaultFilters = false, includeFilters = {@ComponentScan.Filter({Controller.class})})
+@ComponentScan(basePackages = {"com.oc"}, useDefaultFilters = false, includeFilters = {@ComponentScan.Filter({Controller.class})})
 public class WebServletConfig implements WebMvcConfigurer {
 
     /**
