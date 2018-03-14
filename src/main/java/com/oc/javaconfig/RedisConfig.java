@@ -15,7 +15,6 @@ import redis.clients.jedis.JedisPoolConfig;
  * redis配置
  */
 @Configuration
-//@PropertySource("classpath:system.properties")
 public class RedisConfig {
 
     private final Environment env;
