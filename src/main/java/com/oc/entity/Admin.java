@@ -14,7 +14,7 @@ public class Admin extends BaseEntity {
 
     private String password;
 
-    private boolean enable;
+    private boolean enabled;
 
     private Long roleId;
 
@@ -34,12 +34,12 @@ public class Admin extends BaseEntity {
         this.password = password;
     }
 
-    public boolean isEnable() {
-        return enable;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setEnable(boolean enable) {
-        this.enable = enable;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Column(nullable = false)

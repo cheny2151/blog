@@ -80,7 +80,7 @@ public class RootConfig implements TransactionManagementConfigurer {
     public LocalContainerEntityManagerFactoryBean fitEntityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(fitComboPooledDataSource());
-        entityManagerFactory.setPackagesToScan("com.cheny.entity");
+        entityManagerFactory.setPackagesToScan("com.oc.entity");
         entityManagerFactory.setPersistenceUnitName("persistenceUnit");
         //jpa vendor
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
