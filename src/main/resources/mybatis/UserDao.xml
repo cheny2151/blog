@@ -2,10 +2,12 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ocean.dao.AdminDao">
+<!-- namespace命名空间对应要映射的dao接口的全限定名 -->
+<mapper namespace="com.oc.dao.mDao.UserDao">
 
-    <resultMap type="com.oc.entity.User" id="user">
-        <!--<result property="id" column="id"/>-->
+    <!-- 如果entity实体类的属性跟数据库表中的字段命名不一样，就需要一个resultMap来对应两者的关系 -->
+    <resultMap id="user" type="com.oc.entity.User">
+        <result property="id" column="id"/>
         <result property="nickName" column="nick_name"/>
         <result property="account" column="account"/>
         <result property="createDate" column="create_date"/>
