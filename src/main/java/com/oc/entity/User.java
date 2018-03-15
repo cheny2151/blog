@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
-public class User {
+public class User extends BaseEntity{
 
     /**
      * 昵称
@@ -19,10 +19,7 @@ public class User {
      * 密码
      */
     private String password;
-    /**
-     * 创建时间
-     */
-    private Date createDate;
+
     /**
      * 座右铭
      */
@@ -63,14 +60,6 @@ public class User {
         this.password = password;
     }
 
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
     public String getMotto() {
         return motto;
     }
@@ -101,7 +90,6 @@ public class User {
                 "nickName='" + nickName + '\'' +
                 ", account='" + account + '\'' +
                 ", password='" + password + '\'' +
-                ", createDate=" + createDate +
                 ", motto='" + motto + '\'' +
                 ", loginStatus=" + loginStatus +
                 ", level=" + level +
