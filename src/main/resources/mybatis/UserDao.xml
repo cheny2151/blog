@@ -9,7 +9,7 @@
     <resultMap id="user" type="com.oc.entity.User">
         <result property="id" column="id"/>
         <result property="nickName" column="nick_name"/>
-        <result property="account" column="account"/>
+        <result property="username" column="username"/>
         <result property="createDate" column="create_date"/>
         <result property="password" column="password"/>
         <result property="loginStatus" column="login_status"/>
@@ -20,6 +20,6 @@
     <select id="getUser" parameterType="string" resultMap="user">
         select *
         from user
-        where account=#{account}
+        where username=#{username}
     </select>
 </mapper>

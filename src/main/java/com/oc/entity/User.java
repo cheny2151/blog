@@ -2,9 +2,12 @@ package com.oc.entity;
 
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Component
+@Entity
+@Table(name = "m_user")
 public class User extends BaseEntity{
 
     /**
@@ -14,16 +17,23 @@ public class User extends BaseEntity{
     /**
      * 账号
      */
-    private String account;
+    private String username;
+
     /**
      * 密码
      */
     private String password;
 
     /**
+     * 角色
+     */
+    private Long roleId;
+
+    /**
      * 座右铭
      */
     private String motto;
+
     /**
      * 登陆状态
      */
@@ -44,12 +54,12 @@ public class User extends BaseEntity{
         this.nickName = nickName;
     }
 
-    public String getAccount() {
-        return account;
+    public String getUsername() {
+        return username;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -58,6 +68,14 @@ public class User extends BaseEntity{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
     public String getMotto() {
@@ -88,7 +106,7 @@ public class User extends BaseEntity{
     public String toString() {
         return "User{" +
                 "nickName='" + nickName + '\'' +
-                ", account='" + account + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", motto='" + motto + '\'' +
                 ", loginStatus=" + loginStatus +
