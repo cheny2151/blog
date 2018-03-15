@@ -16,9 +16,7 @@ import java.io.IOException;
 /**
  * mybatis配置
  */
-
-@Configuration
-@Import(RootConfig.class)
+//@Configuration
 @MapperScan(basePackages = "com.oc.dao.mDao", sqlSessionTemplateRef = "sqlSessionTemplate")
 public class MybatisConfig {
 
