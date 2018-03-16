@@ -1,5 +1,11 @@
 package com.oc.javaconfig;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwt;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import org.apache.commons.lang.time.DateUtils;
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.junit.Test;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,6 +13,8 @@ import org.springframework.context.annotation.Profile;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
+import java.util.Date;
+import java.util.HashMap;
 
 /**
  * 配置profiles
@@ -31,14 +39,13 @@ public class BeanConfig {
 
     @Test
     public void test() throws UnsupportedEncodingException {
-        Base64.Encoder encoder = Base64.getEncoder();
-        Base64.Decoder decoder = Base64.getDecoder();
-        String json = "{\"typ\":\"JWT\",\"alg\":\"HS256\"}";
-        byte[] bytes = json.getBytes("utf-8");
-        String s = encoder.encodeToString(bytes);
-        String s1 = new String(decoder.decode(s));
-        
-        System.out.println(s);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("usr","admin");
+        map.put("exp",new Date());
+        String cherry = Jwts.builder().setClaims(map).setExpiration(DateUtils.addDays(new Date(), 7))
+                .signWith(SignatureAlgorithm.HS256, "cherry").compact();
+        Claims cherry1 = Jwts.parser().setSigningKey("cherry").parseClaimsJws(cherry).getBody();
+        System.out.println(cherry1);
     }
 
 }
