@@ -1,4 +1,4 @@
-package com.oc.dao.mDao;
+package com.oc.dao.mDaoImpl;
 
 import com.oc.entity.User;
 import org.springframework.stereotype.Repository;

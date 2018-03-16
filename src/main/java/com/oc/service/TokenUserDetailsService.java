@@ -18,7 +18,7 @@ public class TokenUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_admin"));
-        return new User("admin","{noop}123456",authorities);
+        return new User("admin","{noop}",authorities);
     }
 
 }

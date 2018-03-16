@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace命名空间对应要映射的dao接口的全限定名 -->
-<mapper namespace="com.oc.dao.mDao.UserDao">
+<mapper namespace="com.oc.dao.mDaoImpl.UserDao">
 
     <!-- 如果entity实体类的属性跟数据库表中的字段命名不一样，就需要一个resultMap来对应两者的关系 -->
     <resultMap id="user" type="com.oc.entity.User">
