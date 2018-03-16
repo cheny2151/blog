@@ -10,7 +10,7 @@ public interface BaseDao<T extends BaseEntity, ID extends Serializable> {
     /**
      * 根据id查找对象
      */
-    T find(Long id);
+    T find(ID id);
 
     /**
      * 查找所有实体
