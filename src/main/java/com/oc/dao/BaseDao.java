@@ -1,4 +1,4 @@
-package com.oc.dao.base;
+package com.oc.dao;
 
 import com.oc.entity.BaseEntity;
 
@@ -10,7 +10,7 @@ public interface BaseDao<T extends BaseEntity, ID extends Serializable> {
     /**
      * 根据id查找对象
      */
-    T find(Long id);
+    T find(ID id);
 
     /**
      * 查找所有实体
@@ -33,9 +33,14 @@ public interface BaseDao<T extends BaseEntity, ID extends Serializable> {
     void remove(ID id);
 
     /**
+     * 删除
+     */
+    void remove(T entity);
+
+    /**
      * 批量删除
      */
-    void remove(ID... id);
+    void remove(ID... ids);
 
     /**
      * flush
@@ -45,6 +50,6 @@ public interface BaseDao<T extends BaseEntity, ID extends Serializable> {
     /**
      * 根据实体获取id
      */
-    ID getIdentifire(T entity);
+    ID getIdentifier(T entity);
 
 }

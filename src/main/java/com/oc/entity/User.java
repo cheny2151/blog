@@ -1,21 +1,16 @@
 package com.oc.entity;
 
-import org.springframework.stereotype.Component;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Component
 @Entity
-@Table(name = "m_user")
-public class User extends BaseEntity{
+@Table(name = "auth_user")
+public class User {
 
     /**
-     * 昵称
-     */
-    private String nickName;
-    /**
-     * 账号
+     * 用户名
      */
     private String username;
 
@@ -25,35 +20,40 @@ public class User extends BaseEntity{
     private String password;
 
     /**
+     * 是否启用
+     */
+    private boolean enabled;
+
+    /**
+     * 角色枚举
+     */
+    public enum OriginType {
+
+        /**
+         * 管理员
+         */
+        admin,
+
+        /**
+         * 博主
+         */
+        blogger
+
+    }
+
+    /**
      * 角色
      */
-    private Long roleId;
+    private String role;
 
     /**
-     * 座右铭
+     * 原类型id
      */
-    private String motto;
+    private Long originId;
 
-    /**
-     * 登陆状态
-     */
-    private Boolean loginStatus;
-    /**
-     * 等级
-     */
-    private Integer level;
 
-    public User() {
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
+    @Id
+    @Column(nullable = false)
     public String getUsername() {
         return username;
     }
@@ -62,6 +62,7 @@ public class User extends BaseEntity{
         this.username = username;
     }
 
+    @Column(nullable = false)
     public String getPassword() {
         return password;
     }
@@ -70,47 +71,31 @@ public class User extends BaseEntity{
         this.password = password;
     }
 
-    public Long getRoleId() {
-        return roleId;
+    @Column(nullable = false)
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
-    public String getMotto() {
-        return motto;
+    @Column(nullable = false)
+    public String getRole() {
+        return role;
     }
 
-    public void setMotto(String motto) {
-        this.motto = motto;
+    public void setRole(String role) {
+        this.role = role;
     }
 
-    public Boolean getLoginStatus() {
-        return loginStatus;
+    @Column(nullable = false, unique = true)
+    public Long getOriginId() {
+        return originId;
     }
 
-    public void setLoginStatus(Boolean loginStatus) {
-        this.loginStatus = loginStatus;
+    public void setOriginId(Long originId) {
+        this.originId = originId;
     }
 
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "nickName='" + nickName + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", motto='" + motto + '\'' +
-                ", loginStatus=" + loginStatus +
-                ", level=" + level +
-                '}';
-    }
 }

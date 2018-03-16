@@ -14,11 +14,14 @@ import java.util.List;
 @Service("tokenUserDetailsService")
 public class TokenUserDetailsService implements UserDetailsService {
 
+    /**
+     * 登陆
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_admin"));
-        return new User("admin","{noop}",authorities);
+        return new User("admin", "{noop}123", authorities);
     }
 
 }
