@@ -19,7 +19,7 @@
 
     <select id="getUser" parameterType="string" resultMap="user">
         select *
-        from user
+        from m_user
         where username=#{username}
     </select>
 </mapper>

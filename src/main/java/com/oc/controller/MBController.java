@@ -16,7 +16,7 @@ public class MBController {
     @RequestMapping("/test")
     public void test(){
         System.out.println("=========come in==========");
-        User user = userService.getUser("user");
+        User user = userService.getUser("ocean");
         System.out.println(user.toString());
     }
 }
