@@ -1,4 +1,4 @@
-package com.oc.service.mService;
+package com.oc.service;
 
 import com.oc.entity.User;
 import com.oc.dao.mDao.UserDao;
