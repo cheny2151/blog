@@ -17,6 +17,7 @@ import javax.sql.DataSource;
 
 /**
  * Spring Security配置
+ * http://blog.csdn.net/carrie__yang/article/details/72867962
  */
 @Configuration
 //启用web安全性

@@ -15,7 +15,7 @@ import java.io.IOException;
  * mybatis配置
  * 参考 ：https://www.jianshu.com/p/8fcefc4d724b
  */
-//@Configuration
+@Configuration
 @MapperScan(basePackages = "com.oc.dao.mDao", sqlSessionTemplateRef = "sqlSessionTemplate") //注解形式扫描dao接口
 public class MybatisConfig {
 
