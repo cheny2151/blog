@@ -1,10 +1,9 @@
 package com.oc.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 用户统一认证表
@@ -50,7 +49,7 @@ public class User extends BaseEntity {
     /**
      * 角色
      */
-    private Role role;
+    private Set<Role> roles = new HashSet<>();
 
     /**
      * 原类型id
@@ -90,13 +89,14 @@ public class User extends BaseEntity {
         this.enabled = enabled;
     }
 
-    @ManyToOne
-    public Role getRole() {
-        return role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "mid_user_role")
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Column(nullable = false, unique = true)
@@ -115,4 +115,5 @@ public class User extends BaseEntity {
     public void setLastPasswordReset(Date lastPasswordReset) {
         this.lastPasswordReset = lastPasswordReset;
     }
+
 }

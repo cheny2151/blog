@@ -1,7 +1,9 @@
 package com.oc.javaconfig;
 
+import com.oc.filter.JsonWebTokenFilter;
 import com.oc.service.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -12,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.sql.DataSource;
 
@@ -66,6 +69,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //spring 永不创建session
                 .and().formLogin()
                 .and().httpBasic();
+        http.addFilterBefore(jsonWebTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Bean("jsonWebTokenFilter")
+    public JsonWebTokenFilter jsonWebTokenFilter() {
+        return new JsonWebTokenFilter();
     }
 
 }

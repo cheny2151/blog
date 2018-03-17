@@ -1,6 +1,9 @@
 package com.oc.service.security;
 
 import com.oc.dao.UserDao;
+import com.oc.entity.User;
+import com.oc.utils.security.UserDetailsFactory;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,11 +21,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserDao userDao;
 
     /**
-     * 登陆
+     * 获取认证信息
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        User user = userDao.findByUsername(username);
+        return StringUtils.isEmpty(username) ? null : UserDetailsFactory.create(user);
     }
+
 
 }

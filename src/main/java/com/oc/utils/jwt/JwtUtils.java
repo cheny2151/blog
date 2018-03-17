@@ -45,7 +45,7 @@ public class JwtUtils {
     /**
      * 生成token
      */
-    public static String generateToken(JwtAuthentication user) {
+    public static String generateToken(JwtPrincipal user) {
         Date signDate = new Date();
         Map<String, Object> claims = generateClaims(user, signDate);
         return Jwts.builder().setClaims(claims)
@@ -54,7 +54,7 @@ public class JwtUtils {
                 .compact();
     }
 
-    private static Map<String, Object> generateClaims(JwtAuthentication user, Date signDate) {
+    private static Map<String, Object> generateClaims(JwtPrincipal user, Date signDate) {
         HashMap<String, Object> claim = new HashMap<>();
         claim.put(USER_NAME_KEY, user.getUsername());
         claim.put(CREATE_DATE_KEY, signDate);
@@ -70,24 +70,29 @@ public class JwtUtils {
      */
     private static Claims parseToken(String token) {
         if (token == null) throw new NullPointerException();
-        return Jwts.parser()
-                .setSigningKey(SHA256_KEY)
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            return Jwts.parser()
+                    .setSigningKey(SHA256_KEY)
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**
      * 提取username
      */
     public static String parseToUsername(String token) {
-        return parseToken(token).get(USER_NAME_KEY, String.class);
+        Claims claims;
+        return (claims = parseToken(token)) == null ? null : claims.get(USER_NAME_KEY, String.class);
     }
 
     /**
      * 1,token签证未过期
      * 2,用户最后一次修改密码时间为null || token签证创建时间在修改密码时间之后
      */
-    public static boolean validate(String token, JwtAuthentication auth) {
+    public static boolean validate(String token, JwtPrincipal auth) {
         Claims claims = parseToken(token);
         return claims.getExpiration().after(new Date()) && (auth.getLastPasswordReset() == null || new Date(claims.get(CREATE_DATE_KEY, long.class)).before(auth.getLastPasswordReset()));
     }

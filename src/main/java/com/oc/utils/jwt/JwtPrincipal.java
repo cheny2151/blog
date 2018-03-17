@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * JsonWebToken 安全认证用户
  */
-public class JwtAuthentication implements UserDetails {
+public class JwtPrincipal implements UserDetails {
 
     private static final long serialVersionUID = 2764317447462499613L;
 
@@ -27,17 +27,17 @@ public class JwtAuthentication implements UserDetails {
 
     private Date lastPasswordReset;
 
-    public JwtAuthentication(Collection<? extends GrantedAuthority> authorities, String username, String password, Date lastPasswordReset) {
+    public JwtPrincipal(Collection<? extends GrantedAuthority> authorities, String username, String password, Date lastPasswordReset, boolean enabled) {
         this.authorities = authorities;
         this.username = username;
         this.password = password;
         this.lastPasswordReset = lastPasswordReset;
+        this.enabled = enabled;
         this.accountNonLocked = true;
         this.accountNonLocked = true;
-        this.enabled = true;
     }
 
-    public JwtAuthentication(Collection<? extends GrantedAuthority> authorities, String username, String password, Date lastPasswordReset, boolean accountNonExpired, boolean accountNonLocked, boolean enabled) {
+    public JwtPrincipal(Collection<? extends GrantedAuthority> authorities, String username, String password, Date lastPasswordReset, boolean accountNonExpired, boolean accountNonLocked, boolean enabled) {
         this.authorities = authorities;
         this.username = username;
         this.password = password;
