@@ -16,6 +16,13 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
 import java.util.List;
 
+
+/**
+ * dao基类
+ *
+ * @param <T>  entity
+ * @param <ID> id
+ */
 public class BaseDaoImpl<T extends BaseEntity, ID extends Serializable> implements BaseDao<T, ID> {
 
     @PersistenceContext
@@ -30,8 +37,8 @@ public class BaseDaoImpl<T extends BaseEntity, ID extends Serializable> implemen
     }
 
     @Override
-    public T find(ID ID) {
-        return entityManager.find(entityType, ID);
+    public T find(ID id) {
+        return id == null ? null : entityManager.find(entityType, id);
     }
 
     @Override
@@ -45,11 +52,13 @@ public class BaseDaoImpl<T extends BaseEntity, ID extends Serializable> implemen
 
     @Override
     public void persist(T entity) {
+        Assert.notNull(entity, "not null entity");
         entityManager.persist(entity);
     }
 
     @Override
     public void merge(T entity) {
+        Assert.notNull(entity, "not null entity");
         entityManager.merge(entity);
     }
 

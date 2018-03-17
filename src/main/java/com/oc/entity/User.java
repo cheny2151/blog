@@ -2,12 +2,18 @@ package com.oc.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.Date;
 
+/**
+ * 用户统一认证表
+ */
 @Entity
 @Table(name = "auth_user")
-public class User {
+public class User extends BaseEntity {
+
+    private static final long serialVersionUID = -8511714083272416828L;
 
     /**
      * 用户名
@@ -44,16 +50,20 @@ public class User {
     /**
      * 角色
      */
-    private String role;
+    private Role role;
 
     /**
      * 原类型id
      */
     private Long originId;
 
+    /**
+     * 最后一次修改密码的时间
+     */
+    private Date lastPasswordReset;
 
-    @Id
-    @Column(nullable = false)
+
+    @Column(nullable = false, unique = true)
     public String getUsername() {
         return username;
     }
@@ -80,12 +90,12 @@ public class User {
         this.enabled = enabled;
     }
 
-    @Column(nullable = false)
-    public String getRole() {
+    @ManyToOne
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -98,4 +108,11 @@ public class User {
         this.originId = originId;
     }
 
+    public Date getLastPasswordReset() {
+        return lastPasswordReset;
+    }
+
+    public void setLastPasswordReset(Date lastPasswordReset) {
+        this.lastPasswordReset = lastPasswordReset;
+    }
 }

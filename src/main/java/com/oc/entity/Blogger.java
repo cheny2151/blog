@@ -1,15 +1,17 @@
 package com.oc.entity;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
-@Component
+/**
+ * 博主
+ */
 @Entity
 @Table(name = "m_blogger", indexes = {@Index(columnList = "username")})
 public class Blogger extends BaseEntity {
+
+    private static final long serialVersionUID = 5004361985367958141L;
 
     /**
      * 昵称

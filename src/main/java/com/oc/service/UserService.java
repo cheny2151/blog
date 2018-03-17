@@ -1,15 +1,7 @@
 package com.oc.service;
 
-import com.oc.entity.Blogger;
-import com.oc.dao.mDaoImpl.UserDao;
-import org.springframework.stereotype.Service;
+import com.oc.entity.User;
 
-@Service
-public class UserService {
-//    @Autowired
-    private UserDao userDao;
+public interface UserService extends BaseService<User, Long> {
 
-    public Blogger getUser(String account) {
-        return userDao.getUser(account);
-    }
 }

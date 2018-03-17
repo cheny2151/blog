@@ -1,11 +1,17 @@
-package com.oc.dao;
+package com.oc.service;
 
 import com.oc.entity.BaseEntity;
 
 import java.io.Serializable;
 import java.util.List;
 
-public interface BaseDao<T extends BaseEntity, ID extends Serializable> {
+/**
+ * service基类
+ *
+ * @param <T>  entity
+ * @param <ID> id
+ */
+public interface BaseService<T extends BaseEntity, ID extends Serializable> {
 
     /**
      * 根据id查找对象
@@ -20,36 +26,31 @@ public interface BaseDao<T extends BaseEntity, ID extends Serializable> {
     /**
      * 保存
      */
-    void persist(T entity);
+    void save(T entity);
 
     /**
      * 更新
      */
-    void merge(T entity);
+    void update(T entity);
 
     /**
      * 删除
      */
-    void remove(ID id);
+    void delete(ID id);
 
     /**
      * 删除
      */
-    void remove(T entity);
+    void delete(T entity);
 
     /**
      * 批量删除
      */
-    void remove(ID[] ids);
+    void delete(ID[] ids);
 
     /**
      * flush
      */
     void flush();
-
-    /**
-     * 根据实体获取id
-     */
-    ID getIdentifier(T entity);
 
 }

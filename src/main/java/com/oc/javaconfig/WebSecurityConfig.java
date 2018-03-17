@@ -1,6 +1,6 @@
 package com.oc.javaconfig;
 
-import com.oc.service.TokenUserDetailsService;
+import com.oc.service.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
 
     @Autowired
-    public WebSecurityConfig(DataSource dataSource, Environment env, TokenUserDetailsService tokenUserDetailsService) {
+    public WebSecurityConfig(DataSource dataSource, Environment env, UserDetailsServiceImpl tokenUserDetailsService) {
         this.dataSource = dataSource;
         this.env = env;
         this.userDetailsService = tokenUserDetailsService;
