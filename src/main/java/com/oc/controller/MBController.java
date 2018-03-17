@@ -1,6 +1,6 @@
 package com.oc.controller;
 
-import com.oc.entity.Blogger;
+import com.oc.entity.User;
 import com.oc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ public class MBController {
     @RequestMapping("/test")
     public void test(){
         System.out.println("=========come in==========");
-        Blogger blogger = userService.getUser("ocean");
-        System.out.println(blogger.toString());
+        User user = userService.find(1L);
+        System.out.println(user.toString());
     }
 }
