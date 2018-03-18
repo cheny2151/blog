@@ -1,4 +1,4 @@
-package com.oc.javaconfig;
+package com.oc.javaconfig.security;
 
 import com.oc.filter.TestFilter;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;

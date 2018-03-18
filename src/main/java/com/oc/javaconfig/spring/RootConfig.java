@@ -1,4 +1,4 @@
-package com.oc.javaconfig;
+package com.oc.javaconfig.spring;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.oc.template.FlushMessageDirective;

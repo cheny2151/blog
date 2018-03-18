@@ -1,6 +1,8 @@
 package com.oc.javaconfig;
 
-import com.oc.filter.TestFilter;
+import com.oc.javaconfig.security.WebSecurityConfig;
+import com.oc.javaconfig.spring.RootConfig;
+import com.oc.javaconfig.springMVC.WebServletConfig;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -9,7 +11,6 @@ import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.*;
-import java.io.IOException;
 
 /**
  * servlet容器配置 (代替web.xml)

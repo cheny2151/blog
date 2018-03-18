@@ -1,4 +1,4 @@
-package com.oc.javaconfig;
+package com.oc.javaconfig.springMVC;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

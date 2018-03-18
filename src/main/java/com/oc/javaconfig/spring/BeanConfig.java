@@ -1,4 +1,4 @@
-package com.oc.javaconfig;
+package com.oc.javaconfig.spring;
 
 import com.oc.system.databind.DateEditor;
 import com.oc.system.databind.StringEditor;
