@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -42,7 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+        auth.authenticationProvider(authenticationProvider());
+//        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
     /**
@@ -78,6 +80,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    @Bean("daoAuthenticationProvider")
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(bCryptPasswordEncoder());
+        provider.setUserDetailsService(userDetailsService);
+        provider.setHideUserNotFoundExceptions(false);
+        return provider;
+    }
+
     /**
      * 加密算法:BCrypt
      */
@@ -95,13 +106,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     *
+     * 403 权限不合法处理类
      */
     @Bean("jsonAccessDeniedHandler")
     public JsonAccessDeniedHandler jsonAccessDeniedHandler() {
         return new JsonAccessDeniedHandler();
     }
 
+    /**
+     * 401 未登录处理类
+     */
     @Bean("jsonAuthenticationEntryPoint")
     public AuthenticationEntryPoint jsonAuthenticationEntryPoint() {
         return new JsonAuthenticationEntryPoint();
