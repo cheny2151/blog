@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Date;
 
 /**
- * JsonWebToken 安全认证用户
+ * JsonWebToken 安全认证用户信息
  */
 public class JwtPrincipal implements UserDetails {
 
@@ -33,7 +33,7 @@ public class JwtPrincipal implements UserDetails {
         this.password = password;
         this.lastPasswordReset = lastPasswordReset;
         this.enabled = enabled;
-        this.accountNonLocked = true;
+        this.accountNonExpired = true;
         this.accountNonLocked = true;
     }
 

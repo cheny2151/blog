@@ -1,6 +1,8 @@
 package com.oc.filter;
 
+import com.oc.utils.jwt.JwtPrincipal;
 import com.oc.utils.jwt.JwtUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * token拦截器
+ * 若拦截到含有token的请求头 则尝试进行认证
+ */
 public class JsonWebTokenFilter extends OncePerRequestFilter {
 
     private static final String AUTH_REQUEST_HEAD = "AUTH_TOKEN";
@@ -28,13 +34,11 @@ public class JsonWebTokenFilter extends OncePerRequestFilter {
         //从请求头中获取token
         String token = httpServletRequest.getHeader(AUTH_REQUEST_HEAD);
 
-//        if (token != null) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername("admin");
-            SecurityContext securityContext = SecurityContextHolder.getContext();
-            System.out.println(securityContext.getAuthentication().getName());
-
-            if (userDetails != null && (securityContext = SecurityContextHolder.getContext()).getAuthentication() == null) {
-                System.out.println(userDetails.getUsername());
+        if (StringUtils.isNotEmpty(token)) {
+            String username = JwtUtils.parseToUsername(token);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            if (userDetails != null && JwtUtils.validate(token, (JwtPrincipal) userDetails)) {
+                SecurityContext securityContext = SecurityContextHolder.getContext();
                 //UsernamePasswordAuthenticationToken :
                 // 参数1：principal（安全认证信息类,即JwtPrincipal）2: 3:角色权限信息authorities
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
@@ -42,7 +46,7 @@ public class JsonWebTokenFilter extends OncePerRequestFilter {
                         httpServletRequest));
                 securityContext.setAuthentication(authentication);
             }
-//        }
+        }
 
         super.doFilter(httpServletRequest, httpServletResponse, filterChain);
     }

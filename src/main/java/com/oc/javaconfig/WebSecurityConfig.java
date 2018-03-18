@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -14,9 +14,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import javax.sql.DataSource;
 
 /**
  * Spring Security配置
@@ -28,16 +27,10 @@ import javax.sql.DataSource;
 @PropertySource(value = {"classpath:security.properties"})
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final DataSource dataSource;
-
-    private final Environment env;
-
     private final UserDetailsService userDetailsService;
 
     @Autowired
-    public WebSecurityConfig(DataSource dataSource, Environment env, UserDetailsServiceImpl tokenUserDetailsService) {
-        this.dataSource = dataSource;
-        this.env = env;
+    public WebSecurityConfig(UserDetailsServiceImpl tokenUserDetailsService) {
         this.userDetailsService = tokenUserDetailsService;
     }
 
@@ -46,11 +39,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
     /**
-     * 通过重载,配置Spring Security的Filter链
+     *
      */
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -62,14 +55,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/test").authenticated()
+        http.authorizeRequests()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/blogger/**").hasRole("BLOGGER")
                 .anyRequest().permitAll()
                 .and().csrf().disable()                                 //禁用spring跨域处理
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //spring 永不创建session
-                .and().formLogin()
-                .and().httpBasic();
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS); //spring 永不创建session
         http.addFilterBefore(jsonWebTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Bean("authenticationManager")
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    /**
+     * 加密算法:BCrypt
+     */
+    @Bean("passwordEncoder")
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean("jsonWebTokenFilter")

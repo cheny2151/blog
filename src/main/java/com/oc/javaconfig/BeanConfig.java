@@ -1,20 +1,10 @@
 package com.oc.javaconfig;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwt;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.apache.commons.lang.time.DateUtils;
-import org.apache.ibatis.reflection.SystemMetaObject;
-import org.junit.Test;
+import com.oc.system.databind.DateEditor;
+import com.oc.system.databind.StringEditor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-
-import java.io.UnsupportedEncodingException;
-import java.util.Base64;
-import java.util.Date;
-import java.util.HashMap;
 
 /**
  * 配置profiles
@@ -37,15 +27,20 @@ public class BeanConfig {
         return "prod";
     }
 
-    @Test
-    public void test() throws UnsupportedEncodingException {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("usr","admin");
-        map.put("exp",new Date());
-        String cherry = Jwts.builder().setClaims(map).setExpiration(DateUtils.addDays(new Date(), 7))
-                .signWith(SignatureAlgorithm.HS256, "cherry").compact();
-        Claims cherry1 = Jwts.parser().setSigningKey("cherry").parseClaimsJws(cherry).getBody();
-        System.out.println(cherry1);
+    /**
+     * 日期数据绑定
+     */
+    @Bean("dateEditor")
+    public DateEditor dateEditor() {
+        return new DateEditor();
+    }
+
+    /**
+     * 字符串数据绑定
+     */
+    @Bean("stringEditor")
+    public StringEditor stringEditor() {
+        return new StringEditor();
     }
 
 }

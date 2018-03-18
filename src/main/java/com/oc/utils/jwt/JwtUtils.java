@@ -2,8 +2,11 @@ package com.oc.utils.jwt;
 
 import com.oc.utils.SpringUtils;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.impl.DefaultJwtBuilder;
+import io.jsonwebtoken.impl.DefaultJwtParser;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.core.env.Environment;
 
@@ -21,6 +24,10 @@ public class JwtUtils {
         IN_DATE = environment.getProperty("jwt.indate", int.class);
         SHA256_KEY = environment.getProperty("jwt.sha256.key");
     }
+
+    private static final JwtBuilder JWT_BUILDER = new DefaultJwtBuilder();
+
+    private static final JwtParser JWT_PARSER = new DefaultJwtParser();
 
     /**
      * 用户名key
@@ -42,22 +49,25 @@ public class JwtUtils {
      */
     private static String SHA256_KEY;
 
+
     /**
      * 生成token
      */
     public static String generateToken(JwtPrincipal user) {
         Date signDate = new Date();
-        Map<String, Object> claims = generateClaims(user, signDate);
-        return Jwts.builder().setClaims(claims)
+        return JWT_BUILDER
                 .setExpiration(generateExpiration(signDate))
+                .setSubject(user.getUsername())
+                .setIssuedAt(signDate)
                 .signWith(SignatureAlgorithm.HS256, SHA256_KEY)
                 .compact();
     }
 
+    /**
+     * 自定义信息
+     */
     private static Map<String, Object> generateClaims(JwtPrincipal user, Date signDate) {
         HashMap<String, Object> claim = new HashMap<>();
-        claim.put(USER_NAME_KEY, user.getUsername());
-        claim.put(CREATE_DATE_KEY, signDate);
         return claim;
     }
 
@@ -71,7 +81,7 @@ public class JwtUtils {
     private static Claims parseToken(String token) {
         if (token == null) throw new NullPointerException();
         try {
-            return Jwts.parser()
+            return JWT_PARSER
                     .setSigningKey(SHA256_KEY)
                     .parseClaimsJws(token)
                     .getBody();
@@ -85,7 +95,7 @@ public class JwtUtils {
      */
     public static String parseToUsername(String token) {
         Claims claims;
-        return (claims = parseToken(token)) == null ? null : claims.get(USER_NAME_KEY, String.class);
+        return (claims = parseToken(token)) == null ? null : claims.getSubject();
     }
 
     /**
@@ -94,7 +104,9 @@ public class JwtUtils {
      */
     public static boolean validate(String token, JwtPrincipal auth) {
         Claims claims = parseToken(token);
-        return claims.getExpiration().after(new Date()) && (auth.getLastPasswordReset() == null || new Date(claims.get(CREATE_DATE_KEY, long.class)).before(auth.getLastPasswordReset()));
+        return claims != null
+                && claims.getExpiration().after(new Date())
+                && (auth.getLastPasswordReset() == null || claims.getIssuedAt().after(auth.getLastPasswordReset()));
     }
 
 }

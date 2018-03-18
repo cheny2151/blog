@@ -6,15 +6,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.accept.ContentNegotiationManagerFactoryBean;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
-
-import java.util.Properties;
 
 /**
  * MVC配置
@@ -44,6 +41,7 @@ public class WebServletConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         OpenEntityManagerInViewInterceptor openEntityManagerInViewInterceptor = new OpenEntityManagerInViewInterceptor();
         registry.addWebRequestInterceptor(openEntityManagerInViewInterceptor).addPathPatterns("/**");
+//        registry.addInterceptor(new TestInterception()).addPathPatterns("/test2");
     }
 
 
