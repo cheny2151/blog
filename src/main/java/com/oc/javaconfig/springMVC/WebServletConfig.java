@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.http.MediaType;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -41,27 +42,19 @@ public class WebServletConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         OpenEntityManagerInViewInterceptor openEntityManagerInViewInterceptor = new OpenEntityManagerInViewInterceptor();
         registry.addWebRequestInterceptor(openEntityManagerInViewInterceptor).addPathPatterns("/**");
-//        registry.addInterceptor(new TestInterception()).addPathPatterns("/test2");
     }
 
 
-//    @Override
-//    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-//        configurer.favorParameter(false);
-//        configurer.favorPathExtension(false);
-//        configurer.ignoreAcceptHeader(false);
-//        configurer.mediaTypes()
-//        ContentNegotiationManagerFactoryBean contentNegotiationManager = new ContentNegotiationManagerFactoryBean();
-//        contentNegotiationManager.setFavorPathExtension(false);
-//        contentNegotiationManager.setFavorParameter(false);
-//        contentNegotiationManager.setIgnoreAcceptHeader(false);
-//        Properties properties = new Properties();
-//        properties.setProperty("atom", "application/atom+xml");
-//        properties.setProperty("html", "text/html");
-//        properties.setProperty("json", "application/json");
-//        properties.setProperty("*", "*/*");
-//        contentNegotiationManager.setMediaTypes(properties);
-//    }
+    @Override
+    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+        configurer.favorParameter(false);
+        configurer.favorPathExtension(false);
+        configurer.ignoreAcceptHeader(false);
+        configurer.mediaType("html", MediaType.TEXT_HTML);
+        configurer.mediaType("json", MediaType.APPLICATION_JSON_UTF8);
+        configurer.mediaType("xml", MediaType.APPLICATION_XML);
+        configurer.mediaType("*", MediaType.ALL);
+    }
 
     /**
      * 配置视图解析器
