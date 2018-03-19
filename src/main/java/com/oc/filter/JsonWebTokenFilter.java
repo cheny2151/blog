@@ -3,11 +3,13 @@ package com.oc.filter;
 import com.oc.utils.jwt.JwtPrincipal;
 import com.oc.utils.jwt.JwtUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -24,6 +26,8 @@ import java.io.IOException;
  */
 public class JsonWebTokenFilter extends OncePerRequestFilter {
 
+    private final Logger LOGGER = Logger.getLogger(this.getClass());
+
     private static final String AUTH_REQUEST_HEAD = "AUTH_TOKEN";
 
     @Resource(name = "userDetailsServiceImpl")
@@ -36,7 +40,12 @@ public class JsonWebTokenFilter extends OncePerRequestFilter {
 
         if (StringUtils.isNotEmpty(token)) {
             String username = JwtUtils.parseToUsername(token);
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            UserDetails userDetails = null;
+            try {
+                userDetails = userDetailsService.loadUserByUsername(username);
+            } catch (UsernameNotFoundException e) {
+                LOGGER.warn("token exist,but username not found");
+            }
             if (userDetails != null && JwtUtils.validate(token, (JwtPrincipal) userDetails)) {
                 SecurityContext securityContext = SecurityContextHolder.getContext();
                 //UsernamePasswordAuthenticationToken :
@@ -48,7 +57,7 @@ public class JsonWebTokenFilter extends OncePerRequestFilter {
             }
         }
 
-        super.doFilter(httpServletRequest, httpServletResponse, filterChain);
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
 }
