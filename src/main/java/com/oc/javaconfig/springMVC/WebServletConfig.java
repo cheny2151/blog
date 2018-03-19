@@ -112,7 +112,8 @@ public class WebServletConfig implements WebMvcConfigurer {
     }
 
     /**
-     * json变换器(@ResponseBody)
+     * json转换器
+     * 使用@ResponseBody转换对象成json需要注册此bean到RequestMappingHandlerAdapter的MessageConverters
      */
     @Bean
     public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
