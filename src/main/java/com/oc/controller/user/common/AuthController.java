@@ -1,13 +1,10 @@
 package com.oc.controller.user.common;
 
+import com.oc.service.UserService;
+import com.oc.system.message.JsonMessage;
 import com.oc.utils.jwt.JwtPrincipal;
 import com.oc.utils.jwt.JwtUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,26 +12,39 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 
+/**
+ * 用户统一登陆注册接口
+ */
 @Controller("authController")
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Resource(name = "userDetailsServiceImpl")
-    private UserDetailsService userDetailsService;
-    @Autowired
-    AuthenticationManager authenticationManager;
+    @Resource(name = "userServiceImpl")
+    private UserService userService;
 
+    /**
+     * 登陆
+     *
+     * @param username 用户名
+     * @param password 密码
+     */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public String login(String username, String password) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
-        Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authenticate);
-        JwtPrincipal jwtPrincipal = (JwtPrincipal) userDetailsService.loadUserByUsername(username);
-        if (jwtPrincipal != null) {
-            return JwtUtils.generateToken(jwtPrincipal);
+    public JsonMessage login(String username, String password) {
+        if (StringUtils.isEmpty(username)) {
+            return JsonMessage.error("username must not null");
         }
-        return null;
+        if (StringUtils.isEmpty(password)) {
+            return JsonMessage.error("password must not null");
+        }
+        JwtPrincipal jwtPrincipal = userService.authenticated(username, password);
+        if (jwtPrincipal != null) {
+            return JsonMessage.success(
+                    "user", JsonMessage.extract(jwtPrincipal, "username", "authorities"),
+                    "token", JwtUtils.generateToken(jwtPrincipal)
+            );
+        }
+        return JsonMessage.error("登陆失败");
     }
 
 }

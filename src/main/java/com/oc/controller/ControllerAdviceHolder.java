@@ -31,14 +31,12 @@ public class ControllerAdviceHolder {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public String UsernameNotFoundException(UsernameNotFoundException e) {
-        System.out.println("user not ex");
         return e.getMessage();
     }
 
     @ExceptionHandler
     @ResponseBody
     public void exceptionHandler(Exception e) {
-        System.out.println("all ex");
         e.printStackTrace();
     }
 

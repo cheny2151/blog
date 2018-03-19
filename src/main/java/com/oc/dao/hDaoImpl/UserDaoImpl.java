@@ -2,6 +2,7 @@ package com.oc.dao.hDaoImpl;
 
 import com.oc.dao.UserDao;
 import com.oc.entity.User;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.FlushModeType;
@@ -15,6 +16,9 @@ public class UserDaoImpl extends BaseDaoImpl<User, Long> implements UserDao {
 
     @Override
     public User findByUsername(String username) {
+        if (StringUtils.isEmpty(username)){
+            return null;
+        }
         String jpql = "select user from User user where user.username = :username";
         try {
             return entityManager.createQuery(jpql, User.class).setParameter("username", username).setFlushMode(FlushModeType.COMMIT).getSingleResult();
