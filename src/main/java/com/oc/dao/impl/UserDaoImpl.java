@@ -1,4 +1,4 @@
-package com.oc.dao.hDaoImpl;
+package com.oc.dao.impl;
 
 import com.oc.dao.UserDao;
 import com.oc.entity.User;

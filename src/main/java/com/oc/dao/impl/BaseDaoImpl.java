@@ -1,4 +1,4 @@
-package com.oc.dao.hDaoImpl;
+package com.oc.dao.impl;
 
 import com.oc.dao.BaseDao;
 import com.oc.entity.BaseEntity;

@@ -82,7 +82,7 @@ public class WebServletConfig implements WebMvcConfigurer {
     }
 
     /**
-     *
+     * 将json转换器注册到MessageConverters中
      */
     @Bean(name = "requestMappingHandlerAdapter")
     public RequestMappingHandlerAdapter registerRequestMappingHandlerAdapter() {

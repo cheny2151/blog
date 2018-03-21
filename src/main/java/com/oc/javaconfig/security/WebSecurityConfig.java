@@ -44,7 +44,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
-//        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
     /**
@@ -74,12 +73,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling().accessDeniedHandler(jsonAccessDeniedHandler()).authenticationEntryPoint(jsonAuthenticationEntryPoint());
     }
 
+    /**
+     * 显示的声明AuthenticationManager于spring容器
+     */
     @Bean("authenticationManager")
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
+    /**
+     * 配置AuthenticationProvider
+     * HideUserNotFoundExceptions为false使UserNotFoundExceptions抛出，
+     * true则会转为BadCredentialsException
+     */
     @Bean("daoAuthenticationProvider")
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
