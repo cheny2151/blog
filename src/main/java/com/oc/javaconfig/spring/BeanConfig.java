@@ -27,6 +27,12 @@ public class BeanConfig {
         return "prod";
     }
 
+    @Profile("test")
+    @Bean(name = "profilesBean")
+    public String testBean() {
+        return "test";
+    }
+
     /**
      * 日期数据绑定
      */
