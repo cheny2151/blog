@@ -17,6 +17,6 @@ public class MBController {
     public void test(){
         System.out.println("=========come in==========");
         User user = userService.find(1L);
-        System.out.println(user.toString());
+        System.out.println(user.getUsername());
     }
 }
