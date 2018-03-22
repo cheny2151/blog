@@ -1,6 +1,5 @@
 package com.oc.controller;
 
-import com.oc.entity.User;
 import com.oc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,8 @@ public class MBController {
     @RequestMapping("/test")
     public void test(){
         System.out.println("=========come in==========");
-        User user = userService.find(1L);
-        System.out.println(user.getUsername());
+//        userService.delete(new Long[]{1L,2L});
+        userService.delete(1L);
+//        System.out.println(user.getUsername());
     }
 }

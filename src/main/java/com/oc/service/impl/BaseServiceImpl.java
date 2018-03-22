@@ -3,10 +3,12 @@ package com.oc.service.impl;
 import com.oc.dao.BaseDao;
 import com.oc.entity.BaseEntity;
 import com.oc.service.BaseService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
 
+@Transactional
 public class BaseServiceImpl<T extends BaseEntity, ID extends Serializable> implements BaseService<T, ID> {
 
     private BaseDao<T, ID> baseDao;

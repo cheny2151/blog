@@ -66,7 +66,13 @@ public class BaseDaoImpl<T extends BaseEntity, ID extends Serializable> implemen
     public void remove(ID ID) {
         T entity;
         if ((entity = find(ID)) != null) {
-            entityManager.remove(entity);
+            System.out.println(entity.getId());
+            try {
+                entityManager.remove(entity);
+                System.out.println("------------");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

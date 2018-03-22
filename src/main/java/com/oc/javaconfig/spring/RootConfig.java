@@ -8,13 +8,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfig;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
@@ -31,7 +30,7 @@ import java.util.Properties;
 @ComponentScan(basePackages = {"com.oc"}, excludeFilters = {@ComponentScan.Filter({Controller.class})})
 @PropertySource(value = {"classpath:system.properties"})
 @EnableTransactionManagement //启动事务注解
-public class RootConfig implements TransactionManagementConfigurer {
+public class RootConfig {
 
     private final ServletContext servletContext;
 
@@ -52,7 +51,7 @@ public class RootConfig implements TransactionManagementConfigurer {
      * @return
      */
     @Bean(name = "dataSource", destroyMethod = "close")
-    public ComboPooledDataSource fitComboPooledDataSource() {
+    public ComboPooledDataSource dataSource() {
         ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
         try {
             comboPooledDataSource.setDriverClass(env.getRequiredProperty("jdbc.driver"));
@@ -77,15 +76,15 @@ public class RootConfig implements TransactionManagementConfigurer {
      * @return
      */
     @Bean(name = "entityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean fitEntityManagerFactory() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
-        entityManagerFactory.setDataSource(fitComboPooledDataSource());
+        entityManagerFactory.setDataSource(dataSource());
         entityManagerFactory.setPackagesToScan("com.oc.entity");
         entityManagerFactory.setPersistenceUnitName("persistenceUnit");
         //jpa vendor
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setShowSql(false);
-        vendorAdapter.setGenerateDdl(true);
+        vendorAdapter.setShowSql(env.getProperty("hibernate.show_sql",boolean.class));
+        vendorAdapter.setGenerateDdl(env.getProperty("hibernate.generate_ddl",boolean.class));
         entityManagerFactory.setJpaVendorAdapter(vendorAdapter);
         //jpa Properties
         Properties jpaPro = new Properties();
@@ -108,7 +107,7 @@ public class RootConfig implements TransactionManagementConfigurer {
      * @return
      */
     @Bean(name = "freeMarkerConfigurer")
-    public FreeMarkerConfig fitFreeMarkerConfigurer() {
+    public FreeMarkerConfig freeMarkerConfigurer() {
         FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
         freeMarkerConfigurer.setTemplateLoaderPath(env.getRequiredProperty("template.loader_path"));
         //freemarker properties
@@ -137,12 +136,10 @@ public class RootConfig implements TransactionManagementConfigurer {
 
     /**
      * 事务配置
-     *
-     * @return
      */
-    @Override
-    public PlatformTransactionManager annotationDrivenTransactionManager() {
-        return new DataSourceTransactionManager(fitComboPooledDataSource());
+    @Bean
+    public PlatformTransactionManager platformTransactionManager() {
+        return new JpaTransactionManager(entityManagerFactory().getObject());
     }
 
 }
