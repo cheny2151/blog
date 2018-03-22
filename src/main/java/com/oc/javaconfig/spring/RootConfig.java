@@ -136,6 +136,10 @@ public class RootConfig {
 
     /**
      * 事务配置
+     * 加@EnableTransactionManagement注解,并配置一个PlatformTransactionManager的bean
+     * jpa:JpaTransactionManager
+     * jdbc:DataSourceTransactionManager
+     * hibernate:HibernateTransactionManager
      */
     @Bean
     public PlatformTransactionManager platformTransactionManager() {
