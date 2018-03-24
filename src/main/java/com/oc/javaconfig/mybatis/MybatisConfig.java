@@ -1,4 +1,4 @@
-package com.oc.javaconfig;
+package com.oc.javaconfig.mybatis;
 
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;

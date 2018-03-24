@@ -1,5 +1,6 @@
 package com.oc.service.impl;
 
+import com.oc.dao.BaseDao;
 import com.oc.dao.UserDao;
 import com.oc.entity.User;
 import com.oc.service.UserService;
@@ -30,8 +31,9 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
     AuthenticationManager authenticationManager;
 
     @Autowired
-    protected void setBaseDao(UserDao userDao) {
-        super.setBaseDao(userDao);
+    @Override
+    protected void setBaseDao(BaseDao<User, Long> baseDao) {
+        super.setBaseDao(baseDao);
     }
 
     @Override
