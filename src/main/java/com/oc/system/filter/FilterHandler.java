@@ -1,6 +1,5 @@
 package com.oc.system.filter;
 
-import com.oc.entity.BaseEntity;
 import com.oc.utils.SpringUtils;
 
 import javax.persistence.criteria.*;
@@ -17,7 +16,7 @@ public class FilterHandler {
         criteriaBuilder = (CriteriaBuilder) SpringUtils.getBean("criteriaBuilder");
     }
 
-    public static <T extends BaseEntity> void filterQuery(CriteriaQuery<T> criteriaQuery, Root<?> root, Collection<Filter> filters) {
+    public static void filterQuery(CriteriaQuery<?> criteriaQuery, Root<?> root, Collection<Filter> filters) {
         if (filters == null) throw new NullPointerException();
         Predicate restriction = criteriaQuery.getRestriction();
         if (restriction == null) {
@@ -29,7 +28,7 @@ public class FilterHandler {
         criteriaQuery.where(restriction);
     }
 
-    public static <T extends BaseEntity> void filterQuery(CriteriaQuery<T> criteriaQuery, Root<?> root, Filter filter) {
+    public static void filterQuery(CriteriaQuery<?> criteriaQuery, Root<?> root, Filter filter) {
         if (filter == null) throw new NullPointerException();
         Predicate restriction = criteriaQuery.getRestriction();
         if (restriction == null) {

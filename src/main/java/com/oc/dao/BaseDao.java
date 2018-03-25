@@ -55,13 +55,18 @@ public interface BaseDao<T extends BaseEntity, ID extends Serializable> {
     ID getIdentifier(T entity);
 
     /**
-     * 过滤
+     * 过滤查找
      */
     List<T> findList(Filter filter);
 
     /**
-     * 过滤
+     * 过滤查找
      */
     List<T> findList(Collection<Filter> filters);
+
+    /**
+     * 过滤count
+     */
+    long count(Filter filter);
 
 }

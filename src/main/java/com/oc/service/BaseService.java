@@ -65,4 +65,9 @@ public interface BaseService<T extends BaseEntity, ID extends Serializable> {
      */
     List<T> findList(Collection<Filter> filters);
 
+    /**
+     * 过滤count
+     */
+    long count(Filter filter);
+
 }

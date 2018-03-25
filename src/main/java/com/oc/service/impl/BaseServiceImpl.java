@@ -69,5 +69,10 @@ public class BaseServiceImpl<T extends BaseEntity, ID extends Serializable> impl
         return baseDao.findList(filters);
     }
 
+    @Override
+    public long count(Filter filter) {
+        return baseDao.count(filter);
+    }
+
 
 }

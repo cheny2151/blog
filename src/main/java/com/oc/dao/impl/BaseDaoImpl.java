@@ -129,4 +129,14 @@ public class BaseDaoImpl<T extends BaseEntity, ID extends Serializable> implemen
         return entityManager.createQuery(criteriaQuery).setFlushMode(FlushModeType.COMMIT).getResultList();
     }
 
+    @Override
+    public long count(Filter filter) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+        Root<T> root = criteriaQuery.from(entityType);
+        criteriaQuery.select(criteriaBuilder.count(root));
+        FilterHandler.filterQuery(criteriaQuery, root, filter);
+        return entityManager.createQuery(criteriaQuery).setFlushMode(FlushModeType.COMMIT).getSingleResult();
+    }
+
 }
