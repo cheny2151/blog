@@ -4,15 +4,14 @@ import com.oc.dao.BaseDao;
 import com.oc.entity.BaseEntity;
 import com.oc.system.filter.Filter;
 import com.oc.system.filter.FilterHandler;
+import com.oc.system.page.Page;
+import com.oc.system.page.Pageable;
 import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
@@ -69,13 +68,7 @@ public class BaseDaoImpl<T extends BaseEntity, ID extends Serializable> implemen
     public void remove(ID ID) {
         T entity;
         if ((entity = findList(ID)) != null) {
-            System.out.println(entity.getId());
-            try {
-                entityManager.remove(entity);
-                System.out.println("------------");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            entityManager.remove(entity);
         }
     }
 
@@ -137,6 +130,34 @@ public class BaseDaoImpl<T extends BaseEntity, ID extends Serializable> implemen
         criteriaQuery.select(criteriaBuilder.count(root));
         FilterHandler.filterQuery(criteriaQuery, root, filter);
         return entityManager.createQuery(criteriaQuery).setFlushMode(FlushModeType.COMMIT).getSingleResult();
+    }
+
+    @Override
+    public Page<T> findPage(Pageable<T> pageable) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(entityType);
+        Root<T> root = criteriaQuery.from(entityType);
+        return findPageBase(criteriaBuilder, criteriaQuery, root, pageable);
+    }
+
+    /**
+     * 处理分页基类方法
+     * 只对dao包可见
+     */
+    protected Page<T> findPageBase(CriteriaBuilder criteriaBuilder, CriteriaQuery<T> criteriaQuery, Root<T> from, Pageable<T> pageable) {
+        FilterHandler.filterQuery(criteriaQuery, from, pageable.getFilter());
+        Predicate restriction = criteriaQuery.getRestriction();
+        List<T> content = entityManager.createQuery(criteriaQuery).setFirstResult(pageable.getStartSize()).setMaxResults(pageable.getPageSize()).getResultList();
+        //以同样的条件查找count
+        CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
+        Root<T> root = countQuery.from(entityType);
+        countQuery.select(criteriaBuilder.count(root));
+        countQuery.where(restriction);
+        Long count = entityManager.createQuery(countQuery).setFlushMode(FlushModeType.COMMIT).getSingleResult();
+        pageable.setContent(content);
+        pageable.setEntityTotal(count);
+        pageable.setPageTotal((int) ((count + pageable.getPageSize() - 1) / pageable.getPageSize()));
+        return new Page<>(pageable);
     }
 
 }

@@ -29,7 +29,7 @@ public class Page<T> implements Serializable{
         return pageable.getCurrentPage();
     }
 
-    public int getEntityTotal() {
+    public long getEntityTotal() {
         return pageable.getEntityTotal();
     }
 
@@ -45,4 +45,10 @@ public class Page<T> implements Serializable{
         return pageable.getSearchValue();
     }
 
+    @Override
+    public String toString() {
+        return "Page{" +
+                "pageable=" + pageable +
+                '}';
+    }
 }

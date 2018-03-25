@@ -1,5 +1,7 @@
 package com.oc.system.page;
 
+import com.oc.system.filter.Filter;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,7 @@ import java.util.List;
  * 分页信息
  * Created by cheny on 2017/9/24.
  */
-public class Pageable<T> implements Serializable{
+public class Pageable<T> implements Serializable {
 
     private static final long serialVersionUID = 5705303253597757865L;
 
@@ -25,7 +27,7 @@ public class Pageable<T> implements Serializable{
 
     private int pageTotal;
 
-    private int entityTotal;
+    private long entityTotal;
 
     private List<T> content = new ArrayList<>();
 
@@ -59,11 +61,11 @@ public class Pageable<T> implements Serializable{
         this.pageTotal = pageTotal;
     }
 
-    public int getEntityTotal() {
+    public long getEntityTotal() {
         return entityTotal;
     }
 
-    public void setEntityTotal(int entityTotal) {
+    public void setEntityTotal(long entityTotal) {
         this.entityTotal = entityTotal;
     }
 
@@ -99,4 +101,24 @@ public class Pageable<T> implements Serializable{
         this.filter = filter;
     }
 
+    /**
+     * 分页起始位置
+     */
+    public int getStartSize() {
+        return (currentPage - 1) * pageSize;
+    }
+
+    @Override
+    public String toString() {
+        return "Pageable{" +
+                "currentPage=" + currentPage +
+                ", pageSize=" + pageSize +
+                ", pageTotal=" + pageTotal +
+                ", entityTotal=" + entityTotal +
+                ", content=" + content +
+                ", searchProperty='" + searchProperty + '\'' +
+                ", searchValue='" + searchValue + '\'' +
+                ", filter=" + filter +
+                '}';
+    }
 }

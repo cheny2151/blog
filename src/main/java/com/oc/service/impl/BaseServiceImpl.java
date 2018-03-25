@@ -4,6 +4,8 @@ import com.oc.dao.BaseDao;
 import com.oc.entity.BaseEntity;
 import com.oc.service.BaseService;
 import com.oc.system.filter.Filter;
+import com.oc.system.page.Page;
+import com.oc.system.page.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
@@ -74,5 +76,9 @@ public class BaseServiceImpl<T extends BaseEntity, ID extends Serializable> impl
         return baseDao.count(filter);
     }
 
+    @Override
+    public Page<T> findPage(Pageable<T> pageable) {
+        return baseDao.findPage(pageable);
+    }
 
 }

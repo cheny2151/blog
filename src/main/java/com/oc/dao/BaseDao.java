@@ -2,6 +2,8 @@ package com.oc.dao;
 
 import com.oc.entity.BaseEntity;
 import com.oc.system.filter.Filter;
+import com.oc.system.page.Page;
+import com.oc.system.page.Pageable;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -68,5 +70,10 @@ public interface BaseDao<T extends BaseEntity, ID extends Serializable> {
      * 过滤count
      */
     long count(Filter filter);
+
+    /**
+     * 分页
+     */
+    Page<T> findPage(Pageable<T> pageable);
 
 }
