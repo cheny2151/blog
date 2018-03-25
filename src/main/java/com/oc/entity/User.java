@@ -116,4 +116,16 @@ public class User extends BaseEntity {
         this.lastPasswordReset = lastPasswordReset;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                ", roles=" + roles +
+                ", originId=" + originId +
+                ", lastPasswordReset=" + lastPasswordReset +
+                '}';
+    }
+
 }

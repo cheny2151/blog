@@ -2,6 +2,8 @@ package com.oc.dao.impl;
 
 import com.oc.dao.BaseDao;
 import com.oc.entity.BaseEntity;
+import com.oc.system.filter.Filter;
+import com.oc.system.filter.FilterHandler;
 import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
@@ -14,6 +16,7 @@ import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -37,7 +40,7 @@ public class BaseDaoImpl<T extends BaseEntity, ID extends Serializable> implemen
     }
 
     @Override
-    public T find(ID id) {
+    public T findList(ID id) {
         return id == null ? null : entityManager.find(entityType, id);
     }
 
@@ -65,7 +68,7 @@ public class BaseDaoImpl<T extends BaseEntity, ID extends Serializable> implemen
     @Override
     public void remove(ID ID) {
         T entity;
-        if ((entity = find(ID)) != null) {
+        if ((entity = findList(ID)) != null) {
             System.out.println(entity.getId());
             try {
                 entityManager.remove(entity);
@@ -104,6 +107,26 @@ public class BaseDaoImpl<T extends BaseEntity, ID extends Serializable> implemen
     public ID getIdentifier(T entity) {
         Assert.notNull(entity, "not null entity");
         return (ID) entityManager.getEntityManagerFactory().getPersistenceUnitUtil().getIdentifier(entity);
+    }
+
+    @Override
+    @SuppressWarnings("Duplicates")
+    public List<T> findList(Filter filter) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(entityType);
+        Root<T> root = criteriaQuery.from(entityType);
+        FilterHandler.filterQuery(criteriaQuery, root, filter);
+        return entityManager.createQuery(criteriaQuery).setFlushMode(FlushModeType.COMMIT).getResultList();
+    }
+
+    @Override
+    @SuppressWarnings("Duplicates")
+    public List<T> findList(Collection<Filter> filters) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(entityType);
+        Root<T> root = criteriaQuery.from(entityType);
+        FilterHandler.filterQuery(criteriaQuery, root, filters);
+        return entityManager.createQuery(criteriaQuery).setFlushMode(FlushModeType.COMMIT).getResultList();
     }
 
 }

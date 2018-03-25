@@ -6,6 +6,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+
 /**
  * 配置profiles
  * 1,xml:配置默认加载的profiles spring.profiles.default
@@ -14,6 +18,9 @@ import org.springframework.context.annotation.Profile;
  */
 @Configuration
 public class BeanConfig {
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Profile("dev")
     @Bean(name = "profilesBean")
@@ -47,6 +54,11 @@ public class BeanConfig {
     @Bean("stringEditor")
     public StringEditor stringEditor() {
         return new StringEditor();
+    }
+
+    @Bean("criteriaBuilder")
+    public CriteriaBuilder criteriaBuilder() {
+        return entityManager.getCriteriaBuilder();
     }
 
 }

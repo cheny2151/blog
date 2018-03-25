@@ -3,9 +3,11 @@ package com.oc.service.impl;
 import com.oc.dao.BaseDao;
 import com.oc.entity.BaseEntity;
 import com.oc.service.BaseService;
+import com.oc.system.filter.Filter;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 @Transactional
@@ -19,7 +21,7 @@ public class BaseServiceImpl<T extends BaseEntity, ID extends Serializable> impl
 
     @Override
     public T find(ID id) {
-        return baseDao.find(id);
+        return baseDao.findList(id);
     }
 
     @Override
@@ -56,5 +58,16 @@ public class BaseServiceImpl<T extends BaseEntity, ID extends Serializable> impl
     public void flush() {
         baseDao.flush();
     }
+
+    @Override
+    public List<T> findList(Filter filter) {
+        return baseDao.findList(filter);
+    }
+
+    @Override
+    public List<T> findList(Collection<Filter> filters) {
+        return baseDao.findList(filters);
+    }
+
 
 }

@@ -1,8 +1,10 @@
 package com.oc.service;
 
 import com.oc.entity.BaseEntity;
+import com.oc.system.filter.Filter;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -52,5 +54,15 @@ public interface BaseService<T extends BaseEntity, ID extends Serializable> {
      * flush
      */
     void flush();
+
+    /**
+     * 过滤
+     */
+    List<T> findList(Filter filter);
+
+    /**
+     * 过滤
+     */
+    List<T> findList(Collection<Filter> filters);
 
 }
