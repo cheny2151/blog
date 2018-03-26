@@ -6,6 +6,7 @@ import com.oc.system.filter.Filter;
 import com.oc.system.filter.FilterHandler;
 import com.oc.system.page.Page;
 import com.oc.system.page.Pageable;
+import com.oc.utils.SqlFactory;
 import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
@@ -138,6 +139,14 @@ public class BaseDaoImpl<T extends BaseEntity, ID extends Serializable> implemen
         CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(entityType);
         Root<T> root = criteriaQuery.from(entityType);
         return findPageBase(criteriaBuilder, criteriaQuery, root, pageable);
+    }
+
+    @Override
+    public Page<T> findPageNative(String selection, String[] tableNames, String restriction,Pageable<T> pageable) {
+        String sql = SqlFactory.createSelect(selection,tableNames,restriction);
+        String count = SqlFactory.createCount(tableNames, restriction);
+        entityManager.createNativeQuery(sql).setFlushMode(FlushModeType.COMMIT);
+        return null;
     }
 
     /**

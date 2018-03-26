@@ -76,4 +76,13 @@ public interface BaseDao<T extends BaseEntity, ID extends Serializable> {
      */
     Page<T> findPage(Pageable<T> pageable);
 
+    /**
+     * 分页原生sql
+     *
+     * @param selection   查找的内容
+     * @param tableName   查找的表命
+     * @param restriction 限定条件
+     */
+    Page<T> findPageNative(String selection, String[] tableName, String restriction,Pageable<T> pageable);
+
 }
