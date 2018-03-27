@@ -6,15 +6,17 @@ import com.oc.system.filter.Filter;
 import com.oc.system.filter.FilterHandler;
 import com.oc.system.page.Page;
 import com.oc.system.page.Pageable;
-import com.oc.utils.SqlFactory;
+import com.oc.utils.sql.SqlFactory;
 import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.*;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -142,11 +144,18 @@ public class BaseDaoImpl<T extends BaseEntity, ID extends Serializable> implemen
     }
 
     @Override
-    public Page<T> findPageNative(String selection, String[] tableNames, String restriction,Pageable<T> pageable) {
-        String sql = SqlFactory.createSelect(selection,tableNames,restriction);
+    @SuppressWarnings("unchecked")
+    public Page<T> findPageNative(String selection, String[] tableNames, String restriction, Pageable<T> pageable, SqlFactory.ParameterHolder parameterHolder) {
+        String sql = SqlFactory.createSelect(selection, tableNames, restriction);
         String count = SqlFactory.createCount(tableNames, restriction);
-        entityManager.createNativeQuery(sql).setFlushMode(FlushModeType.COMMIT);
-        return null;
+        Query query = entityManager.createNativeQuery(sql, entityType);
+        //函数式接口设置sql占位符参数,Query为装饰者类，用于对外只暴露setParameter函数
+        parameterHolder.setParameter(new com.oc.utils.sql.Query(query));
+        List<T> resultList = query.setFlushMode(FlushModeType.COMMIT).setFirstResult((pageable.getPageNumber() - 1) * pageable.getPageSize()).setMaxResults(pageable.getPageSize()).getResultList();
+        Query countQuery = entityManager.createNativeQuery(count);
+        parameterHolder.setParameter(new com.oc.utils.sql.Query(countQuery));
+        long counts = ((BigInteger) countQuery.setFlushMode(FlushModeType.COMMIT).getSingleResult()).longValue();
+        return new Page<>(pageable, resultList, counts);
     }
 
     /**
@@ -163,10 +172,7 @@ public class BaseDaoImpl<T extends BaseEntity, ID extends Serializable> implemen
         countQuery.select(criteriaBuilder.count(root));
         countQuery.where(restriction);
         Long count = entityManager.createQuery(countQuery).setFlushMode(FlushModeType.COMMIT).getSingleResult();
-        pageable.setContent(content);
-        pageable.setEntityTotal(count);
-        pageable.setPageTotal((int) ((count + pageable.getPageSize() - 1) / pageable.getPageSize()));
-        return new Page<>(pageable);
+        return new Page<>(pageable, content, count);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.oc.service;
 
 import com.oc.entity.User;
+import com.oc.system.page.Page;
 import com.oc.utils.jwt.JwtPrincipal;
 
 public interface UserService extends BaseService<User, Long> {

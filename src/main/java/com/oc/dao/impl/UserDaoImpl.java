@@ -2,6 +2,8 @@ package com.oc.dao.impl;
 
 import com.oc.dao.UserDao;
 import com.oc.entity.User;
+import com.oc.system.page.Page;
+import com.oc.system.page.Pageable;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +18,7 @@ public class UserDaoImpl extends BaseDaoImpl<User, Long> implements UserDao {
 
     @Override
     public User findByUsername(String username) {
-        if (StringUtils.isEmpty(username)){
+        if (StringUtils.isEmpty(username)) {
             return null;
         }
         String jpql = "select user from User user where user.username = :username";

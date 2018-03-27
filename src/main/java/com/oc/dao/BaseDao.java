@@ -4,6 +4,7 @@ import com.oc.entity.BaseEntity;
 import com.oc.system.filter.Filter;
 import com.oc.system.page.Page;
 import com.oc.system.page.Pageable;
+import com.oc.utils.sql.SqlFactory;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -83,6 +84,6 @@ public interface BaseDao<T extends BaseEntity, ID extends Serializable> {
      * @param tableName   查找的表命
      * @param restriction 限定条件
      */
-    Page<T> findPageNative(String selection, String[] tableName, String restriction,Pageable<T> pageable);
+    Page<T> findPageNative(String selection, String[] tableName, String restriction,Pageable<T> pageable, SqlFactory.ParameterHolder parameterHolder);
 
 }

@@ -19,17 +19,15 @@ public class Pageable<T> implements Serializable {
      */
     private final static int DEFAULT_PAGE_SIZE = 20;
 
-    private final static int DEFAULT_CURRENT_PAGE = 1;
+    private final static int DEFAULT_PAGE_NUMBER = 1;
 
-    private int currentPage = DEFAULT_CURRENT_PAGE;
+    private int pageNumber = DEFAULT_PAGE_NUMBER;
 
     private int pageSize = DEFAULT_PAGE_SIZE;
 
     private int pageTotal;
 
-    private long entityTotal;
-
-    private List<T> content = new ArrayList<>();
+    private long total;
 
     private String searchProperty;
 
@@ -37,12 +35,12 @@ public class Pageable<T> implements Serializable {
 
     private List<Filter> filter = new ArrayList<>();
 
-    public int getCurrentPage() {
-        return currentPage;
+    public int getPageNumber() {
+        return pageNumber;
     }
 
-    public void setCurrentPage(int currentPage) {
-        this.currentPage = currentPage;
+    public void setPageNumber(int pageNumber) {
+        this.pageNumber = pageNumber;
     }
 
     public int getPageSize() {
@@ -61,20 +59,12 @@ public class Pageable<T> implements Serializable {
         this.pageTotal = pageTotal;
     }
 
-    public long getEntityTotal() {
-        return entityTotal;
+    public long getTotal() {
+        return total;
     }
 
-    public void setEntityTotal(long entityTotal) {
-        this.entityTotal = entityTotal;
-    }
-
-    public List<T> getContent() {
-        return content;
-    }
-
-    public void setContent(List<T> content) {
-        this.content = content;
+    public void setTotal(long total) {
+        this.total = total;
     }
 
     public String getSearchProperty() {
@@ -105,17 +95,16 @@ public class Pageable<T> implements Serializable {
      * 分页起始位置
      */
     public int getStartSize() {
-        return (currentPage - 1) * pageSize;
+        return (pageNumber - 1) * pageSize;
     }
 
     @Override
     public String toString() {
         return "Pageable{" +
-                "currentPage=" + currentPage +
+                "pageNumber=" + pageNumber +
                 ", pageSize=" + pageSize +
                 ", pageTotal=" + pageTotal +
-                ", entityTotal=" + entityTotal +
-                ", content=" + content +
+                ", total=" + total +
                 ", searchProperty='" + searchProperty + '\'' +
                 ", searchValue='" + searchValue + '\'' +
                 ", filter=" + filter +

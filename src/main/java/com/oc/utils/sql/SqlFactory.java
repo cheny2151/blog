@@ -1,4 +1,4 @@
-package com.oc.utils;
+package com.oc.utils.sql;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -62,6 +62,15 @@ public class SqlFactory {
                 .insert(0, SELECT).append(SPACE)
                 .append(WHERE).append(SPACE)
                 .append(restriction).toString();
+    }
+
+    /**
+     * query参数函数式接口
+     */
+    public interface ParameterHolder {
+
+        void setParameter(Query query);
+
     }
 
 }
