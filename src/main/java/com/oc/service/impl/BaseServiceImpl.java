@@ -23,7 +23,7 @@ public class BaseServiceImpl<T extends BaseEntity, ID extends Serializable> impl
 
     @Override
     public T find(ID id) {
-        return baseDao.findList(id);
+        return baseDao.find(id);
     }
 
     @Override

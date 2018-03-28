@@ -9,10 +9,7 @@ import com.oc.system.page.Pageable;
 import com.oc.utils.sql.SqlFactory;
 import org.springframework.util.Assert;
 
-import javax.persistence.EntityManager;
-import javax.persistence.FlushModeType;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.*;
 import javax.persistence.criteria.*;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -42,8 +39,12 @@ public class BaseDaoImpl<T extends BaseEntity, ID extends Serializable> implemen
     }
 
     @Override
-    public T findList(ID id) {
+    public T find(ID id) {
         return id == null ? null : entityManager.find(entityType, id);
+    }
+
+    public T find(ID id, LockModeType type) {
+        return entityManager.find(entityType, id, type);
     }
 
     @Override
@@ -70,7 +71,7 @@ public class BaseDaoImpl<T extends BaseEntity, ID extends Serializable> implemen
     @Override
     public void remove(ID ID) {
         T entity;
-        if ((entity = findList(ID)) != null) {
+        if ((entity = find(ID)) != null) {
             entityManager.remove(entity);
         }
     }
@@ -96,6 +97,11 @@ public class BaseDaoImpl<T extends BaseEntity, ID extends Serializable> implemen
     @Override
     public void flush() {
         entityManager.flush();
+    }
+
+    @Override
+    public void lock(T entity, LockModeType type) {
+        entityManager.lock(entity, type);
     }
 
     @SuppressWarnings("unchecked")

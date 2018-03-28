@@ -61,6 +61,17 @@ public class User extends BaseEntity {
      */
     private Date lastPasswordReset;
 
+    public User() {
+    }
+
+    public User(String username, String password, boolean enabled, Set<Role> roles, Long originId, Date lastPasswordReset) {
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.roles = roles;
+        this.originId = originId;
+        this.lastPasswordReset = lastPasswordReset;
+    }
 
     @Column(nullable = false, unique = true)
     public String getUsername() {

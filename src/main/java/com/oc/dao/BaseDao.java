@@ -6,6 +6,7 @@ import com.oc.system.page.Page;
 import com.oc.system.page.Pageable;
 import com.oc.utils.sql.SqlFactory;
 
+import javax.persistence.LockModeType;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -15,7 +16,12 @@ public interface BaseDao<T extends BaseEntity, ID extends Serializable> {
     /**
      * 根据id查找对象
      */
-    T findList(ID id);
+    T find(ID id);
+
+    /**
+     * 查找，加锁
+     */
+    T find(ID id, LockModeType type);
 
     /**
      * 查找所有实体
@@ -51,6 +57,11 @@ public interface BaseDao<T extends BaseEntity, ID extends Serializable> {
      * flush
      */
     void flush();
+
+    /**
+     * 加锁
+     */
+    void lock(T entity, LockModeType type);
 
     /**
      * 根据实体获取id
