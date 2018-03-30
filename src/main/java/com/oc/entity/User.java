@@ -9,7 +9,7 @@ import java.util.Set;
  * 用户统一认证表
  */
 @Entity
-@Table(name = "auth_user")
+@Table(name = "auth_user", indexes = {@Index(columnList = "username")})
 public class User extends BaseEntity {
 
     private static final long serialVersionUID = -8511714083272416828L;
