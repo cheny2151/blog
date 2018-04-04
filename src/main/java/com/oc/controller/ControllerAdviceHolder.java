@@ -44,7 +44,7 @@ public class ControllerAdviceHolder {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public JsonMessage exceptionHandler(Exception e) {
         logger.error(e.getMessage(), e);
-        return JsonMessage.error("服务器异常");
+        return JsonMessage.error(e.getMessage());
     }
 
 }
