@@ -1,15 +1,14 @@
 package com.oc.service;
 
-import com.oc.entity.User;
-import com.oc.system.page.Page;
+import com.oc.entity.AuthUser;
 import com.oc.utils.jwt.JwtPrincipal;
 
-public interface UserService extends BaseService<User, Long> {
+public interface UserService extends BaseService<AuthUser, Long> {
 
     /**
      * 通过username查找user
      */
-    User findByUsername(String username);
+    AuthUser findByUsername(String username);
 
     /**
      * 登陆认证

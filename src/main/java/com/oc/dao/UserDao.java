@@ -1,9 +1,9 @@
 package com.oc.dao;
 
-import com.oc.entity.User;
+import com.oc.entity.AuthUser;
 
-public interface UserDao extends BaseDao<User, Long> {
+public interface UserDao extends BaseDao<AuthUser, Long> {
 
-    User findByUsername(String username);
+    AuthUser findByUsername(String username);
 
 }
