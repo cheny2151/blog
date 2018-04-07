@@ -1,6 +1,6 @@
 package com.oc.dao;
 
-import com.oc.entity.Blogger;
+import com.oc.entity.jpa.Blogger;
 
 public interface BloggerDao extends BaseDao<Blogger, Long> {
     /**

@@ -1,4 +1,4 @@
-package com.oc.entity;
+package com.oc.entity.jpa;
 
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,7 @@
 package com.oc.service.impl;
 
 import com.oc.dao.BaseDao;
-import com.oc.entity.BaseEntity;
+import com.oc.entity.jpa.BaseEntity;
 import com.oc.service.BaseService;
 import com.oc.system.filter.Filter;
 import com.oc.system.page.Page;
@@ -77,7 +77,7 @@ public class BaseServiceImpl<T extends BaseEntity, ID extends Serializable> impl
     }
 
     @Override
-    public Page<T> findPage(Pageable<T> pageable) {
+    public Page<T> findPage(Pageable pageable) {
         return baseDao.findPage(pageable);
     }
 

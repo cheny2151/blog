@@ -1,9 +1,8 @@
 package com.oc.dao.impl;
 
 import com.oc.dao.UserDao;
-import com.oc.entity.AuthUser;
+import com.oc.entity.jpa.AuthUser;
 import org.apache.commons.lang.StringUtils;
-import org.junit.Test;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.FlushModeType;

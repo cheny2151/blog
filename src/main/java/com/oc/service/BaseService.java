@@ -1,6 +1,6 @@
 package com.oc.service;
 
-import com.oc.entity.BaseEntity;
+import com.oc.entity.jpa.BaseEntity;
 import com.oc.system.filter.Filter;
 import com.oc.system.page.Page;
 import com.oc.system.page.Pageable;
@@ -75,6 +75,6 @@ public interface BaseService<T extends BaseEntity, ID extends Serializable> {
     /**
      * 分页
      */
-    Page<T> findPage(Pageable<T> pageable);
+    Page<T> findPage(Pageable pageable);
 
 }

@@ -1,16 +1,15 @@
-package com.oc.entity;
+package com.oc.entity.jpa;
 
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
-import java.util.Date;
 
 /**
  * 文章
  */
 @Entity
-@Table(name = "m_article", indexes = {@Index(columnList = "bloggerId"), @Index(columnList = "classificationId")})
-public class Article extends BaseEntity {
+@Table(name = "m_article", indexes = {@Index(columnList = "classificationId")})
+public class ArticleInfo extends BaseEntity {
 
     private static final long serialVersionUID = 3059543850654309594L;
 
@@ -18,16 +17,6 @@ public class Article extends BaseEntity {
      * 标题
      */
     private String title;
-
-    /**
-     * 修改时间
-     */
-    private Date modifyDate;
-
-    /**
-     * 博主id
-     */
-    private Long bloggerId;
 
     /**
      * 博主username
@@ -40,9 +29,9 @@ public class Article extends BaseEntity {
     private Long classificationId;
 
     /**
-     * 分类名称
+     * mongo地址
      */
-    private String classificationName;
+    private String mongoId;
 
     public String getTitle() {
         return title;
@@ -50,22 +39,6 @@ public class Article extends BaseEntity {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Date getModifyDate() {
-        return modifyDate;
-    }
-
-    public void setModifyDate(Date modifyDate) {
-        this.modifyDate = modifyDate;
-    }
-
-    public Long getBloggerId() {
-        return bloggerId;
-    }
-
-    public void setBloggerId(Long bloggerId) {
-        this.bloggerId = bloggerId;
     }
 
     public String getUsername() {
@@ -84,11 +57,11 @@ public class Article extends BaseEntity {
         this.classificationId = classificationId;
     }
 
-    public String getClassificationName() {
-        return classificationName;
+    public String getMongoId() {
+        return mongoId;
     }
 
-    public void setClassificationName(String classificationName) {
-        this.classificationName = classificationName;
+    public void setMongoId(String mongoId) {
+        this.mongoId = mongoId;
     }
 }

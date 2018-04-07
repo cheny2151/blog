@@ -1,5 +1,8 @@
-import com.oc.javaconfig.spring.BeanConfig;
+import com.oc.dao.mongo.ArticleMongo;
 import com.oc.javaconfig.spring.RootConfig;
+import com.oc.service.UserService;
+import com.oc.system.order.OrderFactory;
+import com.oc.system.page.Pageable;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ActiveProfiles;
@@ -22,14 +25,18 @@ public class TestJunits {
 
     @PersistenceContext
     public EntityManager manager;
+    @Resource(name = "articleMongoImpl")
+    private ArticleMongo articleMongo;
+    @Resource(name = "userServiceImpl")
+    private UserService userService;
 
     @Resource(name = "profilesBean")
     private String profile;
 
     @Test
     public void test() {
-//        Object[] result = (Object[]) manager.createNativeQuery("select * from auth_user where id = 1").getSingleResult();
-//        System.out.println(result[0]);
-        System.out.println(profile);
+        Pageable pageable = new Pageable();
+        pageable.getOrders().add(OrderFactory.asc("createDate"));
+        System.out.println(userService.findPage(pageable).getContent().size());
     }
 }

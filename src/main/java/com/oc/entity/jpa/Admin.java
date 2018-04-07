@@ -1,6 +1,5 @@
-package com.oc.entity;
+package com.oc.entity.jpa;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 

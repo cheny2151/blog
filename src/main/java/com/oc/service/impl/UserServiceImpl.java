@@ -2,7 +2,7 @@ package com.oc.service.impl;
 
 import com.oc.dao.BaseDao;
 import com.oc.dao.UserDao;
-import com.oc.entity.AuthUser;
+import com.oc.entity.jpa.AuthUser;
 import com.oc.service.UserService;
 import com.oc.utils.jwt.JwtPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;

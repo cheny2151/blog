@@ -80,7 +80,7 @@ public class RootConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSource());
-        entityManagerFactory.setPackagesToScan("com.oc.entity");
+        entityManagerFactory.setPackagesToScan("com.oc.entity.jpa");
         entityManagerFactory.setPersistenceUnitName("persistenceUnit");
         //jpa vendor
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();

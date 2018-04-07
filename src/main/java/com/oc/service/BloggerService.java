@@ -1,6 +1,6 @@
 package com.oc.service;
 
-import com.oc.entity.Blogger;
+import com.oc.entity.jpa.Blogger;
 
 public interface BloggerService extends BaseService<Blogger, Long> {
 

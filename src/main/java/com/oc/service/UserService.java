@@ -1,6 +1,6 @@
 package com.oc.service;
 
-import com.oc.entity.AuthUser;
+import com.oc.entity.jpa.AuthUser;
 import com.oc.utils.jwt.JwtPrincipal;
 
 public interface UserService extends BaseService<AuthUser, Long> {
