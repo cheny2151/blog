@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/rabbit"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xsi:schemaLocation="http://www.springframework.org/schema/rabbit  http://www.springframework.org/schema/rabbit/spring-rabbit-2.0.xsd
+             http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans-4.3.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath*:system.properties"/>
+
+    <connection-factory id="connectionFactory"
+                        host="${rabbitmq.host}"
+                        username="${rabbitmq.username}"
+                        password="${rabbitmq.password}"/>
+
+    <!-- 配置rabbitMQ管理组件 -->
+    <admin connection-factory="connectionFactory"/>
+
+    <!--队列配置-->
+    <queue name="test" durable="false"/>
+    <queue name="test_for_exchange"/>
+
+    <!--交换器配置-->
+    <fanout-exchange name="ex_fanout" durable="false">
+        <bindings>
+            <binding queue="test_for_exchange"/>
+        </bindings>
+    </fanout-exchange>
+
+    <template id="rabbitTemplate" connection-factory="connectionFactory"/>
+
+    <!--监听器配置-->
+    <beans:bean id="testRabbitListener" class="com.oc.listener.rabbitmq.TestListener"/>
+
+    <listener-container connection-factory="connectionFactory">
+        <listener ref="testRabbitListener" method="handleRabbitMessage" queue-names="test_for_exchange"/>
+    </listener-container>
+
+</beans:beans>

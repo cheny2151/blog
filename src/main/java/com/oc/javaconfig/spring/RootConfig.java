@@ -3,10 +3,7 @@ package com.oc.javaconfig.spring;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.oc.template.FlushMessageDirective;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -30,6 +27,7 @@ import java.util.Properties;
 @Configuration
 @ComponentScan(basePackages = {"com.oc"}, excludeFilters = {@ComponentScan.Filter({Controller.class})})
 @PropertySource(value = {"classpath:system.properties"})
+@ImportResource("classpath*:rabbitmq.xml")
 @EnableTransactionManagement //启动事务注解
 public class RootConfig {
 
