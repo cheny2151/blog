@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.util.Assert;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
@@ -44,7 +45,11 @@ class BaseMongoImpl<T extends MongoBaseEntity> implements BaseMongo<T> {
         Field[] fields = entityType.getDeclaredFields();
         for (Field field : fields) {
             String fieldName = field.getName();
-            if (!"serialVersionUID".equals(fieldName) && field.getAnnotation(Transient.class) == null) {
+            Method readMethod = BeanUtils.getReadMethod(entityType, fieldName);
+            if (readMethod == null) {
+                throw new NullPointerException();
+            }
+            if (!"serialVersionUID".equals(fieldName) && field.getAnnotation(Transient.class) == null && readMethod.getDeclaredAnnotation(Transient.class) == null) {
                 update.set(fieldName, BeanUtils.readValue(entity, fieldName));
             }
         }
