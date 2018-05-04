@@ -31,6 +31,7 @@ public class MongoEntityHelp {
         List<Field> fields = BeanUtils.getAllFields(clazz, Object.class);
         for (Field field : fields) {
             String name = field.getName();
+            //判断是否为默认忽略字段或者主动忽略字段
             if (defaultIgnore(field, clazz) || (hasIgnore && ArrayUtils.contains(ignoreProperties, name))) {
                 continue;
             }
@@ -39,6 +40,10 @@ public class MongoEntityHelp {
         return update;
     }
 
+    /**
+     * 更新默认忽略
+     * Transient 注解的字段为忽略字段
+     */
     private static boolean defaultIgnore(Field field, Class<?> clazz) {
         return ArrayUtils.contains(DEFAULT_IGNORE_PROPERTIES, field.getName())
                 || field.getAnnotation(Transient.class) != null
