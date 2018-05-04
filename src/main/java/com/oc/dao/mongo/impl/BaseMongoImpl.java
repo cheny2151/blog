@@ -48,6 +48,7 @@ class BaseMongoImpl<T extends MongoBaseEntity> implements BaseMongo<T> {
         mongo.updateFirst(Query.query(Criteria.where("id").is(entity.getId())), update, entityType);
     }
 
+    @Override
     public void update(T entity, String[] properties) {
         if (properties != null && properties.length > 0) {
             Update update = new Update();
