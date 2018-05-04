@@ -1,10 +1,13 @@
 package com.oc.dao.mongo.impl;
 
 import com.oc.dao.mongo.BaseMongo;
+import com.oc.entity.jpa.Admin;
 import com.oc.entity.mongo.MongoBaseEntity;
 import com.oc.system.page.Page;
 import com.oc.system.page.PageInfo;
 import com.oc.utils.BeanUtils;
+import com.oc.utils.MongoEntityHelp;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.Sort;
@@ -41,18 +44,7 @@ class BaseMongoImpl<T extends MongoBaseEntity> implements BaseMongo<T> {
 
     @Override
     public void update(T entity) {
-        Update update = new Update();
-        Field[] fields = entityType.getDeclaredFields();
-        for (Field field : fields) {
-            String fieldName = field.getName();
-            Method readMethod = BeanUtils.getReadMethod(entityType, fieldName);
-            if (readMethod == null) {
-                throw new NullPointerException();
-            }
-            if (!"serialVersionUID".equals(fieldName) && field.getAnnotation(Transient.class) == null && readMethod.getDeclaredAnnotation(Transient.class) == null) {
-                update.set(fieldName, BeanUtils.readValue(entity, fieldName));
-            }
-        }
+        Update update = MongoEntityHelp.update(entity);
         mongo.updateFirst(Query.query(Criteria.where("id").is(entity.getId())), update, entityType);
     }
 
