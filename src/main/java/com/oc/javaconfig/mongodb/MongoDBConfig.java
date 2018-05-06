@@ -1,6 +1,7 @@
 package com.oc.javaconfig.mongodb;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,8 +24,9 @@ public class MongoDBConfig {
     @Bean
     public MongoClientFactoryBean mongo() {
         MongoClientFactoryBean mongo = new MongoClientFactoryBean();
-//        MongoCredential credential = MongoCredential.createCredential("", "", new char[]{});
-//        mongo.setCredentials(new MongoCredential[]{credential});
+        //此处认证的database是指use的所属的数据库
+        MongoCredential credential = MongoCredential.createCredential(env.getProperty("mongodb.username"), "admin", env.getProperty("mongodb.password").toCharArray());
+        mongo.setCredentials(new MongoCredential[]{credential});
         mongo.setHost(env.getProperty("mongodb.host"));
         return mongo;
     }

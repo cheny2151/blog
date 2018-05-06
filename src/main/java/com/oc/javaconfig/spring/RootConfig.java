@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfig;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.ServletContext;
 import java.beans.PropertyVetoException;
 import java.util.HashMap;
@@ -82,8 +81,8 @@ public class RootConfig {
         entityManagerFactory.setPersistenceUnitName("persistenceUnit");
         //jpa vendor
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setShowSql(env.getProperty("hibernate.show_sql",boolean.class));
-        vendorAdapter.setGenerateDdl(env.getProperty("hibernate.generate_ddl",boolean.class));
+        vendorAdapter.setShowSql(env.getProperty("hibernate.show_sql", boolean.class));
+        vendorAdapter.setGenerateDdl(env.getProperty("hibernate.generate_ddl", boolean.class));
         entityManagerFactory.setJpaVendorAdapter(vendorAdapter);
         //jpa Properties
         Properties jpaPro = new Properties();

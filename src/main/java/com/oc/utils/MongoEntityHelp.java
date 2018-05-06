@@ -16,7 +16,7 @@ public class MongoEntityHelp {
     private MongoEntityHelp() {
     }
 
-    private final static String[] DEFAULT_IGNORE_PROPERTIES = new String[]{"serialVersionUID"};
+    private final static String[] DEFAULT_IGNORE_PROPERTIES = new String[]{"serialVersionUID", "id"};
 
     /**
      * 获取更新mongo实体的update对象
@@ -35,6 +35,7 @@ public class MongoEntityHelp {
             if (defaultIgnore(field, clazz) || (hasIgnore && ArrayUtils.contains(ignoreProperties, name))) {
                 continue;
             }
+            System.out.println(name + ":" + BeanUtils.readValue(bean, name));
             update.set(name, BeanUtils.readValue(bean, name));
         }
         return update;

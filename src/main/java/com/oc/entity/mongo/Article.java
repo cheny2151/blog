@@ -2,17 +2,13 @@ package com.oc.entity.mongo;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
-
+/**
+ * 文章
+ */
 @Document
 public class Article extends MongoBaseEntity {
 
     private static final long serialVersionUID = 6678930490787393665L;
-
-    /**
-     * 修改时间
-     */
-    private Date createDate;
 
     /**
      * 标题
@@ -38,14 +34,6 @@ public class Article extends MongoBaseEntity {
      * 内容
      */
     private String content;
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
 
     public String getTitle() {
         return title;

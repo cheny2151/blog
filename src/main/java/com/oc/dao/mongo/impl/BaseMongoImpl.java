@@ -1,15 +1,13 @@
 package com.oc.dao.mongo.impl;
 
+import com.mongodb.MongoException;
 import com.oc.dao.mongo.BaseMongo;
-import com.oc.entity.jpa.Admin;
 import com.oc.entity.mongo.MongoBaseEntity;
 import com.oc.system.page.Page;
 import com.oc.system.page.PageInfo;
 import com.oc.utils.BeanUtils;
 import com.oc.utils.MongoEntityHelp;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -17,9 +15,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.util.Assert;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
+import java.util.Date;
 import java.util.List;
 
 class BaseMongoImpl<T extends MongoBaseEntity> implements BaseMongo<T> {
@@ -38,18 +35,26 @@ class BaseMongoImpl<T extends MongoBaseEntity> implements BaseMongo<T> {
     @Override
     public String save(T entity) {
         Assert.notNull(entity, "entity to save must not null");
+        entity.setCreateDate(new Date());
         mongo.save(entity);
         return entity.getId();
     }
 
     @Override
     public void update(T entity) {
+        if (entity.getId() == null) {
+            throw new MongoException("更新实体id不能为null");
+        }
         Update update = MongoEntityHelp.update(entity);
+        System.out.println(update.toString());
         mongo.updateFirst(Query.query(Criteria.where("id").is(entity.getId())), update, entityType);
     }
 
     @Override
     public void update(T entity, String[] properties) {
+        if (entity.getId() == null) {
+            throw new MongoException("更新实体id不能为null");
+        }
         if (properties != null && properties.length > 0) {
             Update update = new Update();
             for (String s : properties) {
