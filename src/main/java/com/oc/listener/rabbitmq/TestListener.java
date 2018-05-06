@@ -20,7 +20,7 @@ public class TestListener implements ChannelAwareMessageListener {
     public void onMessage(Message message, Channel channel) throws IOException {
         Object object = simpleMessageConverter.fromMessage(message);
 //        logger.info(object.getClass());
-        logger.info(Thread.currentThread().getId());
+        logger.info(Thread.currentThread().getId() + ":" + object);
         channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
     }
 

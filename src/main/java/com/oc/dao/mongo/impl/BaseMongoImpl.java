@@ -1,6 +1,5 @@
 package com.oc.dao.mongo.impl;
 
-import com.mongodb.MongoException;
 import com.oc.dao.mongo.BaseMongo;
 import com.oc.entity.mongo.MongoBaseEntity;
 import com.oc.system.page.Page;
@@ -42,9 +41,7 @@ class BaseMongoImpl<T extends MongoBaseEntity> implements BaseMongo<T> {
 
     @Override
     public void update(T entity) {
-        if (entity.getId() == null) {
-            throw new MongoException("更新实体id不能为null");
-        }
+        Assert.notNull(entity.getId(), " 更新实体id不能为null");
         Update update = MongoEntityHelp.update(entity);
         System.out.println(update.toString());
         mongo.updateFirst(Query.query(Criteria.where("id").is(entity.getId())), update, entityType);
@@ -52,9 +49,7 @@ class BaseMongoImpl<T extends MongoBaseEntity> implements BaseMongo<T> {
 
     @Override
     public void update(T entity, String[] properties) {
-        if (entity.getId() == null) {
-            throw new MongoException("更新实体id不能为null");
-        }
+        Assert.notNull(entity.getId(), " 更新实体id不能为null");
         if (properties != null && properties.length > 0) {
             Update update = new Update();
             for (String s : properties) {
