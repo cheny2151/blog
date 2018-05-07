@@ -66,7 +66,8 @@ class BaseMongoImpl<T extends MongoBaseEntity> implements BaseMongo<T> {
 
     @Override
     public long count(Criteria criteria) {
-        return mongo.count(Query.query(criteria), entityType);
+        Query query = criteria == null ? new Query() : Query.query(criteria);
+        return mongo.count(query, entityType);
     }
 
     @Override
