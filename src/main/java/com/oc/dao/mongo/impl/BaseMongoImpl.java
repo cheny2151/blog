@@ -81,12 +81,12 @@ class BaseMongoImpl<T extends MongoBaseEntity> implements BaseMongo<T> {
 
     @Override
     public List<T> find(Criteria criteria) {
-        return mongo.find(Query.query(criteria), entityType);
+        return criteria == null ? mongo.findAll(entityType) : mongo.find(Query.query(criteria), entityType);
     }
 
     @Override
     public Page<T> findPage(Criteria criteria, PageInfo pageInfo, Sort.Order... orders) {
-        Query query = Query.query(criteria);
+        Query query = criteria == null ? new Query() : new Query(criteria);
         long count = mongo.count(query, entityType);
         if (orders != null) {
             query.with(Sort.by(orders));
