@@ -97,5 +97,35 @@ class BaseMongoImpl<T extends MongoBaseEntity> implements BaseMongo<T> {
         return new Page<>(pageInfo, content, count);
     }
 
+    //rouji mongo聚合代码
+    /*public void aggregation(){
+        //方式一：
+        AggregationResults<BasicDBObject> aggregate = mongoTemplate.aggregate(
+                Aggregation.newAggregation(
+                        HuanXinMessage.class,
+                        Aggregation.match(Criteria.where("receiver").is("d" + doctor.getUsername()).and("unread").is(true)),
+                        Aggregation.group("sender").count().as("count")
+                ),
+                BasicDBObject.class
+        );
+        List<BasicDBObject> mappedResults = aggregate.getMappedResults();
+
+        HashMap<Long, Integer> result = new HashMap<>();
+
+        for (BasicDBObject object : mappedResults) {
+            result.put(Long.valueOf(object.getString("_id").substring(1)), object.getInt("count"));
+        }
+
+        //方式二：
+        HashMap<Long, Integer> result = new HashMap<>();
+        ArrayList<DBObject> dbObjects = new ArrayList<>();
+        dbObjects.add(new BasicDBObject("$match", new BasicDBObject("receiver", "d" + doctor.getUsername())));
+        dbObjects.add(new BasicDBObject("$group", new BasicDBObject("_id", "$sender").append("count", new BasicDBObject("$sum", 1))));
+        AggregationOutput output = mongoTemplate.getCollection(mongoTemplate.getCollectionName(HuanXinMessage.class)).aggregate(dbObjects);
+        for (DBObject dbObject : output.results()) {
+            result.put(Long.valueOf(dbObject.get("_id").toString().substring(1)), Integer.valueOf(dbObject.get("count").toString()));
+        }
+    }*/
+
 
 }
