@@ -25,7 +25,7 @@ public class FileTypeHolder {
     public String getUploadPath(Image image) {
         StringBuilder pathBuilder = new StringBuilder(SystemUtils.getValue("static"));
         String imagePath = SystemUtils.getValue("imagePath");
-        String s = imagePath.replaceAll("^\\$\\{imagePath\\}$", image.toString());
+        String s = imagePath.replaceAll("\\$\\{imageType}", image.toString());
         System.out.println(s);
         return null;
     }
