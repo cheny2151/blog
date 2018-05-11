@@ -24,10 +24,13 @@ public class MongoDBConfig {
     @Bean
     public MongoClientFactoryBean mongo() {
         MongoClientFactoryBean mongo = new MongoClientFactoryBean();
-        //此处认证的database是指use的所属的数据库
-        MongoCredential credential = MongoCredential.createCredential(env.getProperty("mongodb.username"), "admin", env.getProperty("mongodb.password").toCharArray());
-        mongo.setCredentials(new MongoCredential[]{credential});
-        mongo.setHost(env.getProperty("mongodb.host"));
+        if (env.getProperty("mongodb.auth", boolean.class, false)) {
+            //此处认证的database是指use的所属的数据库
+            MongoCredential credential = MongoCredential.createCredential(env.getRequiredProperty("mongodb.username"),
+                    env.getRequiredProperty("mongodb.authBase"), env.getRequiredProperty("mongodb.password").toCharArray());
+            mongo.setCredentials(new MongoCredential[]{credential});
+        }
+        mongo.setHost(env.getProperty("mongodb.host", "localhost"));
         return mongo;
     }
 
