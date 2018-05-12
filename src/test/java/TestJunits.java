@@ -20,7 +20,7 @@ import javax.persistence.PersistenceContext;
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {RootConfig.class})
-@ActiveProfiles("test")
+@ActiveProfiles("dev")
 public class TestJunits {
 
     @PersistenceContext

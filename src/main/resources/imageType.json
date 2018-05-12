@@ -1,9 +1,0 @@
-{
-  "static":"/usr/local/blog/static",
-  "imagePath": "/image/${imageType}",
-  "text":"text",
-  "int":5,
-  "array":[1,2,3,4,5],
-  "double":279.23,
-  "boolean":true
-}

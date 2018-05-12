@@ -1,7 +1,10 @@
 package com.oc.utils.fileupload;
 
+import com.oc.utils.DateUtils;
 import com.oc.utils.SystemUtils;
 import org.junit.Test;
+
+import java.util.Date;
 
 public class FileTypeHolder {
 
@@ -22,17 +25,19 @@ public class FileTypeHolder {
         background
     }
 
-    public String getUploadPath(Image image) {
-        StringBuilder pathBuilder = new StringBuilder(SystemUtils.getValue("static"));
+    public static String getUploadPath(Image image) {
         String imagePath = SystemUtils.getValue("imagePath");
-        String s = imagePath.replaceAll("\\$\\{imageType}", image.toString());
-        System.out.println(s);
-        return null;
+        return uploadPath(imagePath.replaceAll("\\$\\{imageType}", image.toString()));
+    }
+
+    private static String uploadPath(String path) {
+        path = path.replaceAll("\\$\\{now}", DateUtils.formatDay(new Date()));
+        return SystemUtils.getValue("static") + path + "/";
     }
 
     @Test
     public void test() {
-        getUploadPath(Image.avatar);
+        System.out.println(getUploadPath(Image.avatar));
     }
 
 }

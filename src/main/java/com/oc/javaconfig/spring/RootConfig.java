@@ -25,8 +25,6 @@ import java.util.Properties;
  */
 @Configuration
 @ComponentScan(basePackages = {"com.oc"}, excludeFilters = {@ComponentScan.Filter({Controller.class})})
-@PropertySource(value = {"classpath:system.properties"})
-@ImportResource("classpath*:rabbitmq.xml")
 @EnableTransactionManagement //启动事务注解
 public class RootConfig {
 
