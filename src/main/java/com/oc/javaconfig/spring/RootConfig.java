@@ -3,7 +3,9 @@ package com.oc.javaconfig.spring;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.oc.template.FlushMessageDirective;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -46,7 +48,7 @@ public class RootConfig {
      *
      * @return
      */
-    @Bean(name = "dataSource", destroyMethod = "close")
+    @Bean(name = "dataSource")
     public ComboPooledDataSource dataSource() {
         ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
         try {

@@ -4,6 +4,7 @@ import com.oc.utils.SystemUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
+import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -20,6 +21,8 @@ public class FileUploadHolder {
     private final static ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
 
     public static String upload(MultipartFile file, FileTypeHolder.Image image, boolean sync) throws IOException {
+        Assert.notNull(file, "upload file must not null");
+
         String fileFullName = createFileName(file.getOriginalFilename(), image);
         File tempFile = createTempFile(file);
         if (sync) {
