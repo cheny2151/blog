@@ -46,6 +46,7 @@ public class JsonWebTokenFilter extends OncePerRequestFilter {
                 SecurityContext securityContext = SecurityContextHolder.getContext();
                 //UsernamePasswordAuthenticationToken :
                 // 参数1：principal（安全认证信息类,即JwtPrincipal）2: 3:角色权限信息authorities
+                System.out.println(userDetails);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(
                         httpServletRequest));
