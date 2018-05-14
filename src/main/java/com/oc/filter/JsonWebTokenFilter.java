@@ -19,7 +19,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Enumeration;
 
 /**
  * token拦截器
@@ -29,7 +28,7 @@ public class JsonWebTokenFilter extends OncePerRequestFilter {
 
     private final Logger LOGGER = Logger.getLogger(this.getClass());
 
-    private static final String AUTH_REQUEST_HEAD = "AUTH_TOKEN";
+    private static final String AUTH_REQUEST_HEAD = "auth-token";
 
     @Resource(name = "userDetailsServiceImpl")
     private MyUserDetailsService userDetailsService;
@@ -38,21 +37,14 @@ public class JsonWebTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         //从请求头中获取token
         String token = httpServletRequest.getHeader(AUTH_REQUEST_HEAD);
-        LOGGER.info("token" + token);
-        Enumeration<String> headerNames = httpServletRequest.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-            String s = headerNames.nextElement();
-            LOGGER.info(s + ":" + httpServletRequest.getHeader(s));
-        }
+
         if (StringUtils.isNotEmpty(token)) {
             //redis中获取认证或直接解析token获取
             UserDetails userDetails = (userDetails = userDetailsService.loadUserByToken(token)) != null ? userDetails : loadUserByToken(token);
-            LOGGER.info(userDetails);
             if (userDetails != null && JwtUtils.validate(token, (JwtPrincipal) userDetails)) {
                 SecurityContext securityContext = SecurityContextHolder.getContext();
                 //UsernamePasswordAuthenticationToken :
                 // 参数1：principal（安全认证信息类,即JwtPrincipal）2: 3:角色权限信息authorities
-                LOGGER.info(userDetails);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(
                         httpServletRequest));
