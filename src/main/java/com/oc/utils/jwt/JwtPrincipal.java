@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 
 /**
  * JsonWebToken 安全认证用户信息
@@ -110,16 +111,15 @@ public class JwtPrincipal implements UserDetails {
         return lastPasswordReset;
     }
 
-    @Override
-    public String toString() {
-        return "JwtPrincipal{" +
-                "authorities=" + authorities +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", accountNonExpired=" + accountNonExpired +
-                ", accountNonLocked=" + accountNonLocked +
-                ", enabled=" + enabled +
-                ", lastPasswordReset=" + lastPasswordReset +
-                '}';
+    /**
+     * 获取认证权限数组
+     */
+    public String[] getAuthoritiesValues() {
+        String[] values = new String[authorities.size()];
+        int i = 0;
+        for (GrantedAuthority authority : this.authorities) {
+            values[i++] = authority.toString();
+        }
+        return values;
     }
 }

@@ -35,7 +35,7 @@ public class ControllerAdviceHolder {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public JsonMessage UsernameNotFoundException(UsernameNotFoundException e) {
-        logger.info(e.getMessage(), e);
+        logger.info("找不到用户名:" + e.getMessage());
         return JsonMessage.error("username not found");
     }
 
@@ -44,7 +44,7 @@ public class ControllerAdviceHolder {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public JsonMessage exceptionHandler(Exception e) {
         logger.error(e.getMessage(), e);
-        return JsonMessage.error(e.getMessage());
+        return JsonMessage.serverError(e.getMessage());
     }
 
 }

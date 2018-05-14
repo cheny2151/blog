@@ -4,6 +4,7 @@ import com.oc.javaconfig.redis.RedisKey;
 import com.oc.redis.RedisClient;
 import com.oc.service.UserService;
 import com.oc.system.message.JsonMessage;
+import com.oc.utils.JsonUtils;
 import com.oc.utils.jwt.JwtPrincipal;
 import com.oc.utils.jwt.JwtUtils;
 import org.apache.commons.lang.StringUtils;
@@ -49,8 +50,9 @@ public class AuthController {
         if (jwtPrincipal != null) {
             String token = JwtUtils.generateToken(jwtPrincipal);
             redisClient.setValue(String.format(RedisKey.AUTH_TOKEN_KEY, token), jwtPrincipal, indate);
+            System.out.println(JsonUtils.toJson(jwtPrincipal));
             return JsonMessage.success(
-                    "user", JsonMessage.extract(jwtPrincipal, "username", "authorities"),
+                    "user", JsonMessage.extract(jwtPrincipal, "username", "authoritiesValues"),
                     "token", token
             );
         }

@@ -20,9 +20,20 @@ public class JsonMessage implements Serializable {
 
     private static final long serialVersionUID = 4268904972338027637L;
 
-    private static final int ERROR_CODE = 0;
+    /**
+     * 成功状态码
+     */
+    private static final int SUCCESS_CODE = 0;
 
-    private static final int SUCCESS_CODE = 1;
+    /**
+     * 逻辑错误状态吗
+     */
+    private static final int ERROR_CODE = -1;
+
+    /**
+     * 服务器报错状态码
+     */
+    private static final int SERVER_ERROR_CODE = -2;
 
     /**
      * 状态码
@@ -40,7 +51,7 @@ public class JsonMessage implements Serializable {
      * 存放错误信息
      */
     @JsonProperty
-    private String error;
+    private String errMsg;
 
     /**
      * 禁止手动实例化
@@ -50,7 +61,7 @@ public class JsonMessage implements Serializable {
         if (code == SUCCESS_CODE) {
             this.data = data;
         } else {
-            this.error = (String) data;
+            this.errMsg = (String) data;
         }
     }
 
@@ -59,6 +70,13 @@ public class JsonMessage implements Serializable {
      */
     public static JsonMessage error(String message) {
         return new JsonMessage(ERROR_CODE, message);
+    }
+
+    /**
+     * 用于返回服务器异常信息
+     */
+    public static JsonMessage serverError(String message) {
+        return new JsonMessage(SERVER_ERROR_CODE, message);
     }
 
     /**
