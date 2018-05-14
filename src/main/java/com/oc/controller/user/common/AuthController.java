@@ -50,7 +50,6 @@ public class AuthController {
         if (jwtPrincipal != null) {
             String token = JwtUtils.generateToken(jwtPrincipal);
             redisClient.setValue(String.format(RedisKey.AUTH_TOKEN_KEY, token), jwtPrincipal, indate);
-            System.out.println(JsonUtils.toJson(jwtPrincipal));
             return JsonMessage.success(
                     "user", JsonMessage.extract(jwtPrincipal, "username", "authoritiesValues"),
                     "token", token

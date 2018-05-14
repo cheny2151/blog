@@ -111,11 +111,11 @@ public class JsonMessage implements Serializable {
         if (bean == null) {
             return null;
         }
-        HashMap<String, Object> map = new HashMap<>();
         //解析list
         if (bean instanceof Collection) {
             return getMessageList((Collection) bean, properties);
         }
+        HashMap<String, Object> map = new HashMap<>();
         for (String property : properties) {
             HashMap<String, Object> tem = map;
             HashMap<String, Object> field;
