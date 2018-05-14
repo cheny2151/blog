@@ -19,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Enumeration;
 
 /**
  * token拦截器
@@ -37,7 +38,12 @@ public class JsonWebTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         //从请求头中获取token
         String token = httpServletRequest.getHeader(AUTH_REQUEST_HEAD);
-        LOGGER.info(token);
+        LOGGER.info("token" + token);
+        Enumeration<String> headerNames = httpServletRequest.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String s = headerNames.nextElement();
+            LOGGER.info(s + ":" + httpServletRequest.getHeader(s));
+        }
         if (StringUtils.isNotEmpty(token)) {
             //redis中获取认证或直接解析token获取
             UserDetails userDetails = (userDetails = userDetailsService.loadUserByToken(token)) != null ? userDetails : loadUserByToken(token);
