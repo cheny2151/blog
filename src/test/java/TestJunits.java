@@ -1,8 +1,9 @@
 import com.oc.dao.mongo.ArticleMongo;
+import com.oc.entity.mongo.Article;
 import com.oc.javaconfig.spring.RootConfig;
-import com.oc.service.UserService;
-import com.oc.system.order.OrderFactory;
-import com.oc.system.page.Pageable;
+import com.oc.service.jpa.UserService;
+import com.oc.system.page.Page;
+import com.oc.system.page.PageInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ActiveProfiles;
@@ -35,8 +36,22 @@ public class TestJunits {
 
     @Test
     public void test() {
-        Pageable pageable = new Pageable();
-        pageable.getOrders().add(OrderFactory.asc("createDate"));
-        System.out.println(userService.findPage(pageable).getContent().size());
+        Page<Article> idAndTitlePage = articleMongo.findIdAndTitlePage(new PageInfo(),1L);
+        for (Article a:idAndTitlePage.getContent()){
+            System.out.println(a);
+        }
     }
+
+    @Test
+    public void test2() {
+        for (int i = 0; i < 3; i++) {
+            Article article = new Article();
+            article.setAuthor("author2");
+            article.setTitle("title");
+            article.setClassificationId(1L);
+            article.setContent("content");
+            articleMongo.save(article);
+        }
+    }
+
 }

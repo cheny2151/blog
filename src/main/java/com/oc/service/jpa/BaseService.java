@@ -1,4 +1,4 @@
-package com.oc.service;
+package com.oc.service.jpa;
 
 import com.oc.entity.jpa.BaseEntity;
 import com.oc.system.filter.Filter;

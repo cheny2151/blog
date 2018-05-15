@@ -21,7 +21,7 @@ import java.util.List;
 class BaseMongoImpl<T extends MongoBaseEntity> implements BaseMongo<T> {
 
     @Autowired
-    private MongoOperations mongo;
+    protected MongoOperations mongo;
 
     private Class<T> entityType;
 
@@ -88,6 +88,11 @@ class BaseMongoImpl<T extends MongoBaseEntity> implements BaseMongo<T> {
     @Override
     public Page<T> findPage(Criteria criteria, PageInfo pageInfo, Sort.Order... orders) {
         Query query = criteria == null ? new Query() : new Query(criteria);
+        return findPage(query, pageInfo, orders);
+    }
+
+    @Override
+    public Page<T> findPage(Query query, PageInfo pageInfo, Sort.Order... orders) {
         long count = mongo.count(query, entityType);
         if (orders != null) {
             query.with(Sort.by(orders));

@@ -1,6 +1,6 @@
-package com.oc.dao.impl;
+package com.oc.dao.jpa.impl;
 
-import com.oc.dao.BloggerDao;
+import com.oc.dao.jpa.BloggerDao;
 import com.oc.entity.jpa.Blogger;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;

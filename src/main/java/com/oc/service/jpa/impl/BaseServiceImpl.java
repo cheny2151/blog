@@ -1,8 +1,8 @@
-package com.oc.service.impl;
+package com.oc.service.jpa.impl;
 
-import com.oc.dao.BaseDao;
+import com.oc.dao.jpa.BaseDao;
 import com.oc.entity.jpa.BaseEntity;
-import com.oc.service.BaseService;
+import com.oc.service.jpa.BaseService;
 import com.oc.system.filter.Filter;
 import com.oc.system.page.Page;
 import com.oc.system.page.Pageable;

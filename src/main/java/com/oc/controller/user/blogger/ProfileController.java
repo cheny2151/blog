@@ -1,6 +1,6 @@
 package com.oc.controller.user.blogger;
 
-import com.oc.service.BloggerService;
+import com.oc.service.jpa.BloggerService;
 import com.oc.system.message.JsonMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

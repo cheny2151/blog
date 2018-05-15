@@ -1,4 +1,4 @@
-package com.oc.dao;
+package com.oc.dao.jpa;
 
 import com.oc.entity.jpa.AuthUser;
 

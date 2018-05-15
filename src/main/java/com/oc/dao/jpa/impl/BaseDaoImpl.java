@@ -1,6 +1,6 @@
-package com.oc.dao.impl;
+package com.oc.dao.jpa.impl;
 
-import com.oc.dao.BaseDao;
+import com.oc.dao.jpa.BaseDao;
 import com.oc.entity.jpa.BaseEntity;
 import com.oc.system.filter.Filter;
 import com.oc.system.filter.FilterHandler;

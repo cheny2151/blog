@@ -1,15 +1,19 @@
-package com.oc.dao.mongo;
+package com.oc.service.mongo;
 
 import com.oc.entity.mongo.MongoBaseEntity;
 import com.oc.system.page.Page;
 import com.oc.system.page.PageInfo;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.List;
 
-public interface BaseMongo<T extends MongoBaseEntity> {
+/**
+ * mongo 基类接口
+ *
+ * @param <T>
+ */
+public interface BaseService<T extends MongoBaseEntity> {
 
     /**
      * 保存
@@ -58,8 +62,6 @@ public interface BaseMongo<T extends MongoBaseEntity> {
     /**
      * 分页
      */
-    Page<T> findPage(Criteria criteria, PageInfo pageInfo,Sort.Order... orders);
-
-    Page<T> findPage(Query query, PageInfo pageInfo, Sort.Order... orders);
+    Page<T> findPage(Criteria criteria, PageInfo pageInfo, Sort.Order... orders);
 
 }

@@ -2,9 +2,8 @@ package com.oc.controller.user.common;
 
 import com.oc.javaconfig.redis.RedisKey;
 import com.oc.redis.RedisClient;
-import com.oc.service.UserService;
+import com.oc.service.jpa.UserService;
 import com.oc.system.message.JsonMessage;
-import com.oc.utils.JsonUtils;
 import com.oc.utils.jwt.JwtPrincipal;
 import com.oc.utils.jwt.JwtUtils;
 import org.apache.commons.lang.StringUtils;

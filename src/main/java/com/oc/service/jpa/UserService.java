@@ -1,4 +1,4 @@
-package com.oc.service;
+package com.oc.service.jpa;
 
 import com.oc.entity.jpa.AuthUser;
 import com.oc.utils.jwt.JwtPrincipal;

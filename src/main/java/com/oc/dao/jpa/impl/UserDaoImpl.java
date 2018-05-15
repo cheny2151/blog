@@ -1,6 +1,6 @@
-package com.oc.dao.impl;
+package com.oc.dao.jpa.impl;
 
-import com.oc.dao.UserDao;
+import com.oc.dao.jpa.UserDao;
 import com.oc.entity.jpa.AuthUser;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;

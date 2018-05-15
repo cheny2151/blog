@@ -74,4 +74,16 @@ public class Article extends MongoBaseEntity {
     public void setClassificationName(String classificationName) {
         this.classificationName = classificationName;
     }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id='" + super.getId() + '\'' +
+                "title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", classificationId=" + classificationId +
+                ", classificationName='" + classificationName + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

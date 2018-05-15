@@ -1,6 +1,6 @@
-package com.oc.dao.impl;
+package com.oc.dao.jpa.impl;
 
-import com.oc.dao.AdminDao;
+import com.oc.dao.jpa.AdminDao;
 import com.oc.entity.jpa.Admin;
 import org.springframework.stereotype.Repository;
 

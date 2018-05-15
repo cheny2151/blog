@@ -1,6 +1,6 @@
 package com.oc.service.security;
 
-import com.oc.dao.UserDao;
+import com.oc.dao.jpa.UserDao;
 import com.oc.entity.jpa.AuthUser;
 import com.oc.javaconfig.redis.RedisKey;
 import com.oc.redis.RedisClient;
