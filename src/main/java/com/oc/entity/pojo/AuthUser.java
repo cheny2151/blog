@@ -1,6 +1,9 @@
-package com.oc.entity.jpa;
+package com.oc.entity.pojo;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,8 +11,6 @@ import java.util.Set;
 /**
  * 用户统一认证表
  */
-@Entity
-@Table(name = "auth_user", indexes = {@Index(columnList = "username")})
 public class AuthUser extends BaseEntity {
 
     private static final long serialVersionUID = -8511714083272416828L;

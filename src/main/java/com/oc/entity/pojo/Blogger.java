@@ -1,14 +1,8 @@
-package com.oc.entity.jpa;
-
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
+package com.oc.entity.pojo;
 
 /**
  * 博主
  */
-@Entity
-@Table(name = "m_blogger", indexes = {@Index(columnList = "username")})
 public class Blogger extends UserBase {
 
     private static final long serialVersionUID = 5004361985367958141L;

@@ -1,6 +1,6 @@
 package com.oc.system.order;
 
-import com.oc.entity.jpa.BaseEntity;
+import com.oc.entity.pojo.BaseEntity;
 import com.oc.utils.SpringUtils;
 
 import javax.persistence.criteria.CriteriaBuilder;

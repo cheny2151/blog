@@ -1,14 +1,11 @@
-package com.oc.entity.jpa;
+package com.oc.entity.pojo;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * entity基类
  */
-@MappedSuperclass
-@EntityListeners(EntityListener.class)
 public class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 9043258922225188076L;
@@ -23,8 +20,6 @@ public class BaseEntity implements Serializable {
      */
     private Date createDate;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
@@ -33,7 +28,6 @@ public class BaseEntity implements Serializable {
         this.id = id;
     }
 
-    @Column(updatable = false)
     public Date getCreateDate() {
         return createDate;
     }
@@ -41,4 +35,5 @@ public class BaseEntity implements Serializable {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
+
 }

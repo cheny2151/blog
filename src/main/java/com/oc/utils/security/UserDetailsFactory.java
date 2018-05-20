@@ -1,7 +1,7 @@
 package com.oc.utils.security;
 
-import com.oc.entity.jpa.AuthUser;
-import com.oc.entity.jpa.Role;
+import com.oc.entity.pojo.AuthUser;
+import com.oc.entity.pojo.Role;
 import com.oc.utils.jwt.JwtPrincipal;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

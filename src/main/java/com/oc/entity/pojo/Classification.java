@@ -1,13 +1,8 @@
-package com.oc.entity.jpa;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
+package com.oc.entity.pojo;
 
 /**
  * 文章分类
  */
-@Entity
-@Table(name = "m_classification")
 public class Classification extends BaseEntity {
 
     private static final long serialVersionUID = 6072249757608563262L;

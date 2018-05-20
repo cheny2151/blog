@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -69,37 +70,6 @@ public class RootConfig {
     }
 
     /**
-     * jpa配置
-     *
-     * @return
-     */
-    @Bean(name = "entityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
-        entityManagerFactory.setDataSource(dataSource());
-        entityManagerFactory.setPackagesToScan("com.oc.entity.jpa");
-        entityManagerFactory.setPersistenceUnitName("persistenceUnit");
-        //jpa vendor
-        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setShowSql(env.getProperty("hibernate.show_sql", boolean.class));
-        vendorAdapter.setGenerateDdl(env.getProperty("hibernate.generate_ddl", boolean.class));
-        entityManagerFactory.setJpaVendorAdapter(vendorAdapter);
-        //jpa Properties
-        Properties jpaPro = new Properties();
-        jpaPro.setProperty("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
-        jpaPro.setProperty("hibernate.ejb.naming_strategy", env.getRequiredProperty("hibernate.ejb.naming_strategy"));
-        jpaPro.setProperty("hibernate.cache.use_second_level_cache", env.getRequiredProperty("hibernate.cache.use_second_level_cache"));
-        jpaPro.setProperty("hibernate.cache.region.factory_class", env.getRequiredProperty("hibernate.cache.region.factory_class"));
-        jpaPro.setProperty("hibernate.cache.use_query_cache", env.getRequiredProperty("hibernate.cache.use_query_cache"));
-        jpaPro.setProperty("hibernate.jdbc.fetch_size", env.getRequiredProperty("hibernate.jdbc.fetch_size"));
-        jpaPro.setProperty("hibernate.jdbc.batch_size", env.getRequiredProperty("hibernate.jdbc.batch_size"));
-        jpaPro.setProperty("hibernate.connection.isolation", env.getRequiredProperty("hibernate.connection.isolation"));
-        jpaPro.setProperty("javax.persistence.validation.mode", env.getRequiredProperty("javax.persistence.validation.mode"));
-        entityManagerFactory.setJpaProperties(jpaPro);
-        return entityManagerFactory;
-    }
-
-    /**
      * freemarker配置
      *
      * @return
@@ -141,7 +111,7 @@ public class RootConfig {
      */
     @Bean
     public PlatformTransactionManager platformTransactionManager() {
-        return new JpaTransactionManager(entityManagerFactory().getObject());
+        return new DataSourceTransactionManager(dataSource());
     }
 
 }

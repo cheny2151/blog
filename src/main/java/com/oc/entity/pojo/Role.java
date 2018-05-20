@@ -1,13 +1,8 @@
-package com.oc.entity.jpa;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
+package com.oc.entity.pojo;
 
 /**
  * 角色
  */
-@Entity
-@Table(name = "auth_role")
 public class Role extends BaseEntity {
 
     private static final long serialVersionUID = -960190065903091695L;

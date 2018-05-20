@@ -1,14 +1,8 @@
-package com.oc.entity.jpa;
-
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
+package com.oc.entity.pojo;
 
 /**
  * 文章
  */
-@Entity
-@Table(name = "m_article", indexes = {@Index(columnList = "classificationId")})
 public class ArticleInfo extends BaseEntity {
 
     private static final long serialVersionUID = 3059543850654309594L;
