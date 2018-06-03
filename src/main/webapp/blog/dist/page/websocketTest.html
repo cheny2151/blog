@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>websocket test</title>
+</head>
+<script>
+    var webSocket = new WebSocket("ws://localhost:8080/ws");
+    var i = 0;
+
+    webSocket.onopen = function (ev) {
+        console.info("open:" + ev);
+        sendMsg("send");
+    };
+
+    function sendMsg(msg) {
+        msg = msg + i;
+        i++;
+        console.info(i);
+        webSocket.send(msg);
+    }
+
+    webSocket.onclose = function (ev) {
+        console.info("close:" + ev);
+    };
+
+    webSocket.onmessage = function (ev) {
+        console.info(ev);
+        sendMsg("test");
+    }
+</script>
+<body>
+
+</body>
+</html>
