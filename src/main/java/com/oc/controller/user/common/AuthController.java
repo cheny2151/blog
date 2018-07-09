@@ -1,15 +1,10 @@
 package com.oc.controller.user.common;
 
-import com.oc.redis.RedisClient;
 import com.oc.system.message.JsonMessage;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.annotation.Resource;
 
 /**
  * 用户统一登陆注册接口
@@ -17,13 +12,6 @@ import javax.annotation.Resource;
 @Controller("authController")
 @RequestMapping("/auth")
 public class AuthController {
-
-    /* @Resource(name = "userServiceImpl")
-     private UserService userService;*/
-    @Resource(name = "jdkRedisClient")
-    private RedisClient<UserDetails> redisClient;
-    @Value("${jwt.indate}")
-    private int indate;
 
     /**
      * 登陆

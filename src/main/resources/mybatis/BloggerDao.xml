@@ -3,10 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace命名空间对应要映射的dao接口的全限定名 -->
-<mapper namespace="com.oc.dao.mDaoImpl.UserDao">
+<mapper namespace="com.oc.dao.mybatis.BloggerDao">
 
     <!-- 如果entity实体类的属性跟数据库表中的字段命名不一样，就需要一个resultMap来对应两者的关系 -->
-    <resultMap id="user" type="com.oc.entity.pojo.Blogger">
+    <resultMap id="blogger" type="com.oc.entity.pojo.Blogger">
         <result property="id" column="id"/>
         <result property="nickName" column="nick_name"/>
         <result property="username" column="username"/>
@@ -17,9 +17,9 @@
         <result property="motto" column="motto"/>
     </resultMap>
 
-    <select id="getUser" parameterType="string" resultMap="user">
+    <select id="getUserByUsername" parameterType="java.lang.String" resultMap="blogger">
         select *
-        from m_user
-        where username=#{username}
+        from m_blogger
+        where username = #{username}
     </select>
 </mapper>

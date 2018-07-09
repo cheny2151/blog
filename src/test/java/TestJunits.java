@@ -1,10 +1,13 @@
 import com.oc.dao.mongo.ArticleMongo;
+import com.oc.dao.mybatis.BloggerDao;
 import com.oc.entity.mongo.Article;
+import com.oc.entity.pojo.Blogger;
 import com.oc.javaconfig.spring.RootConfig;
 import com.oc.system.page.Page;
 import com.oc.system.page.PageInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -23,32 +26,13 @@ import javax.persistence.PersistenceContext;
 @ActiveProfiles("dev")
 public class TestJunits {
 
-    @PersistenceContext
-    public EntityManager manager;
-    @Resource(name = "articleMongoImpl")
-    private ArticleMongo articleMongo;
-
-    @Resource(name = "profilesBean")
-    private String profile;
+    @Autowired
+    private BloggerDao bloggerDao;
 
     @Test
     public void test() {
-        Page<Article> idAndTitlePage = articleMongo.findIdAndTitlePage(new PageInfo(), 1L);
-        for (Article a : idAndTitlePage.getContent()) {
-            System.out.println(a);
-        }
-    }
-
-    @Test
-    public void test2() {
-        for (int i = 0; i < 3; i++) {
-            Article article = new Article();
-            article.setAuthor("author2");
-            article.setTitle("title");
-            article.setClassificationId(1L);
-            article.setContent("content");
-            articleMongo.save(article);
-        }
+        Blogger admin = bloggerDao.getUserByUsername("admin");
+        System.out.println(admin);
     }
 
 }
