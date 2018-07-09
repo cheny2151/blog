@@ -1,13 +1,7 @@
 package com.oc.controller.user.blogger;
 
-import com.oc.service.jpa.BloggerService;
-import com.oc.system.message.JsonMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.annotation.Resource;
 
 /**
  * 个人中心controller
@@ -15,21 +9,6 @@ import javax.annotation.Resource;
 @Controller("bloggerProfileController")
 @RequestMapping(value = "/blogger/profile")
 public class ProfileController {
-
-    @Resource(name = "bloggerServiceImpl")
-    private BloggerService bloggerService;
-
-    /**
-     * 个人信息
-     */
-    @RequestMapping(value = "/info", method = RequestMethod.GET)
-    @ResponseBody
-    public JsonMessage info() {
-        return JsonMessage.success(
-                bloggerService.getCurrent()
-        );
-    }
-
 
 
 }

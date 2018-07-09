@@ -1,7 +1,6 @@
 import com.oc.dao.mongo.ArticleMongo;
 import com.oc.entity.mongo.Article;
 import com.oc.javaconfig.spring.RootConfig;
-import com.oc.service.jpa.UserService;
 import com.oc.system.page.Page;
 import com.oc.system.page.PageInfo;
 import org.junit.Test;
@@ -28,16 +27,14 @@ public class TestJunits {
     public EntityManager manager;
     @Resource(name = "articleMongoImpl")
     private ArticleMongo articleMongo;
-    @Resource(name = "userServiceImpl")
-    private UserService userService;
 
     @Resource(name = "profilesBean")
     private String profile;
 
     @Test
     public void test() {
-        Page<Article> idAndTitlePage = articleMongo.findIdAndTitlePage(new PageInfo(),1L);
-        for (Article a:idAndTitlePage.getContent()){
+        Page<Article> idAndTitlePage = articleMongo.findIdAndTitlePage(new PageInfo(), 1L);
+        for (Article a : idAndTitlePage.getContent()) {
             System.out.println(a);
         }
     }

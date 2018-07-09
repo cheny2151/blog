@@ -2,7 +2,6 @@ package com.oc.controller;
 
 import com.oc.dao.mongo.ArticleMongo;
 import com.oc.redis.RedisClient;
-import com.oc.service.jpa.UserService;
 import com.oc.system.message.JsonMessage;
 import com.oc.system.page.Pageable;
 import org.springframework.stereotype.Controller;
@@ -16,8 +15,6 @@ public class TestController {
 
     @Resource(name = "jdkRedisClient")
     private RedisClient<String> redisClient;
-    @Resource(name = "userServiceImpl")
-    private UserService userService;
     @Resource(name = "articleMongoImpl")
     private ArticleMongo articleMongo;
 

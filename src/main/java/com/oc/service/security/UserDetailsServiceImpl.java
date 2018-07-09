@@ -1,10 +1,7 @@
 package com.oc.service.security;
 
-import com.oc.dao.jpa.UserDao;
-import com.oc.entity.pojo.AuthUser;
 import com.oc.javaconfig.redis.RedisKey;
 import com.oc.redis.RedisClient;
-import com.oc.utils.security.UserDetailsFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -17,8 +14,6 @@ import javax.annotation.Resource;
 @Service("userDetailsServiceImpl")
 public class UserDetailsServiceImpl implements MyUserDetailsService {
 
-    @Resource(name = "userDaoImpl")
-    private UserDao userDao;
     @Resource(name = "jdkRedisClient")
     private RedisClient<UserDetails> redisClient;
 
@@ -27,11 +22,12 @@ public class UserDetailsServiceImpl implements MyUserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        AuthUser user = userDao.findByUsername(username);
+        /*AuthUser user = userDao.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("unknown username");
         }
-        return UserDetailsFactory.create(user);
+        return UserDetailsFactory.create(user);*/
+        return null;
     }
 
     /**

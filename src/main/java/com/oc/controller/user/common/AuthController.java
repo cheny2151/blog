@@ -1,12 +1,7 @@
 package com.oc.controller.user.common;
 
-import com.oc.javaconfig.redis.RedisKey;
 import com.oc.redis.RedisClient;
-import com.oc.service.jpa.UserService;
 import com.oc.system.message.JsonMessage;
-import com.oc.utils.jwt.JwtPrincipal;
-import com.oc.utils.jwt.JwtUtils;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -23,8 +18,8 @@ import javax.annotation.Resource;
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Resource(name = "userServiceImpl")
-    private UserService userService;
+    /* @Resource(name = "userServiceImpl")
+     private UserService userService;*/
     @Resource(name = "jdkRedisClient")
     private RedisClient<UserDetails> redisClient;
     @Value("${jwt.indate}")
@@ -39,7 +34,7 @@ public class AuthController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public JsonMessage login(String username, String password) {
-        if (StringUtils.isEmpty(username)) {
+        /*if (StringUtils.isEmpty(username)) {
             return JsonMessage.error("username must not null");
         }
         if (StringUtils.isEmpty(password)) {
@@ -53,7 +48,7 @@ public class AuthController {
                     "user", JsonMessage.extract(jwtPrincipal, "username", "authoritiesValues"),
                     "token", token
             );
-        }
+        }*/
         return JsonMessage.error("登陆失败");
     }
 

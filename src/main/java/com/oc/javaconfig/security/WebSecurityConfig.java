@@ -25,10 +25,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * Spring Security配置
  * http://blog.csdn.net/carrie__yang/article/details/72867962
  */
-@Configuration
+//@Configuration
 //启用web安全性
-@EnableWebSecurity
-@PropertySource(value = {"classpath:security.properties"})
+//@EnableWebSecurity
+//@PropertySource(value = {"classpath:security.properties"})
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final MyUserDetailsService userDetailsService;
